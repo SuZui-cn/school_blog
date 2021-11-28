@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///bookstore?UseUnicode=True&CharacterEncoding=UTF-8
+    username: user
+    password: 123456
+server:
+  port: 80
