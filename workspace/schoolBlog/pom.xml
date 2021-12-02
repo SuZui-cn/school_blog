@@ -49,7 +49,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        数据库-->
+        <!--        数据库-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -65,7 +65,7 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.2.6</version>
         </dependency>
-<!--        代码生成器-->
+        <!--        代码生成器-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
@@ -80,7 +80,7 @@
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
         </dependency>
-<!--        redis-->
+        <!--        redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -96,7 +96,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-<!--         Spring Security和JWT整合 -->
+        <!--         Spring Security和JWT整合 -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-jwt</artifactId>
@@ -115,6 +115,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>7.0.1.Final</version>
         </dependency>
     </dependencies>
 
