@@ -46,6 +46,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    public List<User> findUserById(int id) {
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("u_id", id);
+        return userMapper.selectList(userQueryWrapper);
+    }
+
+    @Override
     public boolean delUserById(int id) {
         int i = userMapper.deleteById(id);
         return i != 0;

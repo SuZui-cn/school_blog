@@ -41,6 +41,14 @@ public interface UserService extends IService<User> {
     List<User> findUserByName(String username);
 
     /**
+     * 根据用户Id查找用户
+     *
+     * @param id 用户Id
+     * @return 返回用户集合
+     */
+    List<User> findUserById(int id);
+
+    /**
      * 根据Id删除用户
      *
      * @param id 用户id

@@ -3,6 +3,7 @@ package com.jueding.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jueding.entity.ArticleInfo;
 import com.jueding.mapper.ArticleInfoMapper;
+import com.jueding.mapper.ArticleMapper;
 import com.jueding.service.ArticleInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,4 +20,8 @@ import org.springframework.stereotype.Service;
 public class ArticleInfoServiceImpl extends ServiceImpl<ArticleInfoMapper, ArticleInfo> implements ArticleInfoService {
     @Autowired
     private ArticleInfoMapper articleInfoMapper;
+    @Autowired
+    private ArticleMapper articleMapper;
+
+
 }

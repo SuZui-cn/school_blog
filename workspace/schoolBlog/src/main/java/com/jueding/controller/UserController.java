@@ -4,6 +4,7 @@ package com.jueding.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jueding.common.Result;
 import com.jueding.entity.User;
+import com.jueding.service.ArticleService;
 import com.jueding.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +27,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ArticleService articleService;
 
     /**
      * 查看所有用户的接口
@@ -35,14 +38,20 @@ public class UserController {
     @GetMapping("/getAll")
     public Result getAll() {
         ArrayList<User> users = (ArrayList<User>) userService.getAll();
-        return users == null ? Result.error("查询失败") : Result.success();
+        return users.size() == 0 ? Result.error("查询失败") : Result.success(users);
+    }
+
+    @GetMapping("/getOne/{uid}")
+    public Result getOne(@PathVariable("uid") int uid) {
+        List<User> users = userService.findUserById(uid);
+        return users.size() != 0 ? Result.success(users) : Result.error();
     }
 
     /**
      * 分页查询接口
      *
      * @param currentPage 当前页数
-     * @param pageSize    页数
+     * @param pageSize    每页大小
      * @return 通用返回集
      */
     @GetMapping("/getPage/{currentPage}/{pageSize}")
@@ -53,7 +62,7 @@ public class UserController {
         if (currentPage > page.getPages()) {
             page = userService.getPage((int) page.getPages(), pageSize);
         }
-        return Result.success(page);
+        return page.getTotal() != 0 ? Result.success(page) : Result.error("查询失败");
     }
 
     /**
@@ -65,7 +74,7 @@ public class UserController {
     @PostMapping("/save")
     public Result save(@Validated @RequestBody User user) {
         List<User> userByName = userService.findUserByName(user.getUName());
-        if (userByName != null) {
+        if (userByName.size() == 0) {
             return Result.error();
         }
         return userService.save(user) ? Result.success() : Result.error();
@@ -82,6 +91,12 @@ public class UserController {
         return userService.delUserById(id) ? Result.success() : Result.error();
     }
 
+    /**
+     * 更新用户接口
+     *
+     * @param user 用户对象
+     * @return 通用返回集
+     */
     @PutMapping
     public Result update(@Validated @RequestBody User user) {
         boolean flag = userService.updateById(user);
