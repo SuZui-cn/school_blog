@@ -1,15 +1,15 @@
 package com.jueding.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 北落燕门
@@ -26,7 +26,7 @@ public class Img implements Serializable {
 
     private String iPath;
     @NotBlank
-    private Integer atId;
+    private Integer uId;
 
 
 }

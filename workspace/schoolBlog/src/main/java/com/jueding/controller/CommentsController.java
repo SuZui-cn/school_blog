@@ -2,9 +2,12 @@ package com.jueding.controller;
 
 
 import com.jueding.common.Result;
+import com.jueding.entity.Comments;
 import com.jueding.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,9 +32,22 @@ public class CommentsController {
      * @return 通用返回集
      */
     @GetMapping("getOne/{atId}")
-    public Result getOne(@PathVariable("atId") int atId) {
-        return null;
+    public Result getComment(@PathVariable("atId") int atId) {
+        List<Comments> comments = commentsService.getComments(atId);
+        return comments.size() != 0 ? Result.success(comments) : Result.error();
     }
+
+    /**
+     * 添加评论的接口
+     *
+     * @param comments 评论实体
+     * @return 通用返回集
+     */
+    @PostMapping("save")
+    public Result save(@RequestBody Comments comments) {
+        return commentsService.save(comments) ? Result.success() : Result.error("评论失败");
+    }
+
 
     /**
      * 删除评论的接口
@@ -41,7 +57,7 @@ public class CommentsController {
      */
     @DeleteMapping("{cId}")
     public Result delComments(@PathVariable("cId") int cId) {
-        return null;
+        return commentsService.delComments(cId) ? Result.success() : Result.error();
     }
 
 

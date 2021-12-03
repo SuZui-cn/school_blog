@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jueding.entity.Article;
 import com.jueding.entity.User;
 import com.jueding.mapper.ArticleMapper;
+import com.jueding.service.ArticleInfoService;
 import com.jueding.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ import java.util.List;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private ArticleInfoService articleInfoService;
 
     @Override
     public List<Article> getAll() {
@@ -42,5 +45,5 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public boolean delArticleById(int id) {
         return articleMapper.deleteById(id) > 0;
     }
-    
+
 }
