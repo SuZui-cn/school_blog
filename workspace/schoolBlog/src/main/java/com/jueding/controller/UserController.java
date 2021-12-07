@@ -2,7 +2,7 @@ package com.jueding.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jueding.common.Result;
+import com.jueding.common.lang.Result;
 import com.jueding.entity.User;
 import com.jueding.service.ArticleService;
 import com.jueding.service.UserService;

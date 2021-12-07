@@ -1,4 +1,4 @@
-package com.jueding.common;
+package com.jueding.common.lang;
 
 /**
  * @author 北落燕门

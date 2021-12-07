@@ -1,7 +1,7 @@
 package com.jueding.controller;
 
 
-import com.jueding.common.Result;
+import com.jueding.common.lang.Result;
 import com.jueding.entity.Comments;
 import com.jueding.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;

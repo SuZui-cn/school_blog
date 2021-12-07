@@ -1,7 +1,7 @@
 package com.jueding.controller;
 
 
-import com.jueding.common.Result;
+import com.jueding.common.lang.Result;
 import com.jueding.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
