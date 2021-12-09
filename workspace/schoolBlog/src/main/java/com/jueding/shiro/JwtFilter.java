@@ -69,7 +69,7 @@ public class JwtFilter extends AuthenticatingFilter {
 
         try {
             httpServletResponse.getWriter().print(json);
-        } catch (IOException ioException) {
+        } catch (IOException ignored) {
 
         }
         return false;

@@ -6,10 +6,13 @@ import com.jueding.common.lang.Result;
 import com.jueding.entity.User;
 import com.jueding.service.ArticleService;
 import com.jueding.service.UserService;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +39,14 @@ public class UserController {
      * @return 通用返回集
      */
     @GetMapping("/getAll")
+    @RequiresAuthentication
     public Result getAll() {
         ArrayList<User> users = (ArrayList<User>) userService.getAll();
         return users.size() == 0 ? Result.error("查询失败") : Result.success(users);
     }
 
     @GetMapping("/getOne/{uid}")
+    @RequiresAuthentication
     public Result getOne(@PathVariable("uid") int uid) {
         List<User> users = userService.findUserById(uid);
         return users.size() != 0 ? Result.success(users) : Result.error();
@@ -55,6 +60,7 @@ public class UserController {
      * @return 通用返回集
      */
     @GetMapping("/getPage/{currentPage}/{pageSize}")
+    @RequiresAuthentication
     public Result getPage(@PathVariable("currentPage") int currentPage,
                           @PathVariable("pageSize") int pageSize) {
         Page<User> page = userService.getPage(currentPage, pageSize);
@@ -72,11 +78,13 @@ public class UserController {
      * @return 通用返回集
      */
     @PostMapping("/save")
+    @RequiresAuthentication
     public Result save(@Validated @RequestBody User user) {
         List<User> userByName = userService.findUserByName(user.getUName());
-        if (userByName.size() == 0) {
+        if (userByName.size() > 0) {
             return Result.error();
         }
+        user.setUPassword(DigestUtils.md5DigestAsHex(user.getUPassword().getBytes(StandardCharsets.UTF_8)));
         return userService.save(user) ? Result.success() : Result.error();
     }
 
@@ -87,6 +95,7 @@ public class UserController {
      * @return 通用返回集
      */
     @DeleteMapping("{id}")
+    @RequiresAuthentication
     public Result delete(@PathVariable("id") int id) {
         return userService.delUserById(id) ? Result.success() : Result.error();
     }
@@ -98,6 +107,7 @@ public class UserController {
      * @return 通用返回集
      */
     @PutMapping
+    @RequiresAuthentication
     public Result update(@Validated @RequestBody User user) {
         boolean flag = userService.updateById(user);
         return flag ? Result.success() : Result.error();

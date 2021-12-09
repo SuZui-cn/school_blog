@@ -35,6 +35,5 @@ public class User implements Serializable {
     private String uEmail;
 
     private String uHeadImg;
-
-
+    
 }

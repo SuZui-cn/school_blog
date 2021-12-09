@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author 北落燕门
+ */
 @Data
 public class AccountProfile implements Serializable {
 
@@ -11,8 +14,8 @@ public class AccountProfile implements Serializable {
 
     private String username;
 
-    private String avatar;
-
-    private String email;
+//    private String avatar;
+//
+//    private String email;
 
 }

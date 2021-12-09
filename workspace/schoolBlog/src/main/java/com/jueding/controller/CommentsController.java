@@ -4,6 +4,7 @@ package com.jueding.controller;
 import com.jueding.common.lang.Result;
 import com.jueding.entity.Comments;
 import com.jueding.service.CommentsService;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,7 @@ public class CommentsController {
      * @return 通用返回集
      */
     @GetMapping("getOne/{atId}")
+    @RequiresAuthentication
     public Result getComment(@PathVariable("atId") int atId) {
         List<Comments> comments = commentsService.getComments(atId);
         return comments.size() != 0 ? Result.success(comments) : Result.error();
@@ -44,6 +46,7 @@ public class CommentsController {
      * @return 通用返回集
      */
     @PostMapping("save")
+    @RequiresAuthentication
     public Result save(@RequestBody Comments comments) {
         return commentsService.save(comments) ? Result.success() : Result.error("评论失败");
     }
@@ -56,6 +59,7 @@ public class CommentsController {
      * @return 通用返回集
      */
     @DeleteMapping("{cId}")
+    @RequiresAuthentication
     public Result delComments(@PathVariable("cId") int cId) {
         return commentsService.delComments(cId) ? Result.success() : Result.error();
     }
