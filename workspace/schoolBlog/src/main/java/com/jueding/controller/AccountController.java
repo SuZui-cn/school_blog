@@ -35,6 +35,7 @@ public class AccountController {
     @Autowired
     UserService userService;
 
+
     @Autowired
     JwtUtils jwtUtils;
 
@@ -77,6 +78,7 @@ public class AccountController {
         if (users.size() > 0) {
             return Result.error("注册失败，用户名已注册");
         } else {
+            user.setUPassword(DigestUtils.md5DigestAsHex(user.getUPassword().getBytes(StandardCharsets.UTF_8)));
             return userService.save(user) ? Result.success("注册成功") : Result.error();
         }
     }

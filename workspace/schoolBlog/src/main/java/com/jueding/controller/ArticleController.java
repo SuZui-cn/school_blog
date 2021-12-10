@@ -47,35 +47,36 @@ public class ArticleController {
     }
 
     /**
-     * 查询单个文章的接口
+     * 根据用户ID查询文章的接口
      *
-     * @param atId 文章id
+     * @param uId 用户id
      * @return 通用返回集
      */
     @RequiresAuthentication
-    @GetMapping("getOne/{atId}")
-    private Result getOne(@PathVariable("atId") int atId) {
-        Article article = articleService.getById(atId);
-        return Result.success(article);
+    @GetMapping("/getOne/{uId}")
+    public Result getOne(@PathVariable("uId") int uId) {
+        List<Article> articles = articleService.findByUserId(uId);
+        return articles.size() > 0 ? Result.success(articles) : Result.error();
     }
+
 
     /**
      * 文章分页查询
      *
      * @param currentPage 当前页数
      * @param pageSize    每页大小
-     * @param user        文章所用者(全部查询可为空)
+     * @param article     文章信息（全部查询可为空）
      * @return 通用返回集
      */
     @RequiresAuthentication
     @GetMapping("/getPage/{currentPage}/{pageSize}")
     public Result getPage(@PathVariable("currentPage") int currentPage,
                           @PathVariable("pageSize") int pageSize,
-                          User user) {
-        Page<Article> page = articleService.getPage(currentPage, pageSize, user);
+                          Article article) {
+        Page<Article> page = articleService.getPage(currentPage, pageSize, article);
         //查询超出最大页数时默认查询最后一页
         if (currentPage > page.getPages()) {
-            page = articleService.getPage((int) page.getPages(), pageSize, user);
+            page = articleService.getPage((int) page.getPages(), pageSize, article);
         }
         return page.getTotal() != 0 ? Result.success(page) : Result.error("查询失败");
     }

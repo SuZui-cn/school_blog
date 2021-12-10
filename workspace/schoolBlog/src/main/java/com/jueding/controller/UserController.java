@@ -62,11 +62,12 @@ public class UserController {
     @GetMapping("/getPage/{currentPage}/{pageSize}")
     @RequiresAuthentication
     public Result getPage(@PathVariable("currentPage") int currentPage,
-                          @PathVariable("pageSize") int pageSize) {
-        Page<User> page = userService.getPage(currentPage, pageSize);
+                          @PathVariable("pageSize") int pageSize,
+                          User user) {
+        Page<User> page = userService.getPage(currentPage, pageSize, user);
         //请求页数超过总页数时重新查询
         if (currentPage > page.getPages()) {
-            page = userService.getPage((int) page.getPages(), pageSize);
+            page = userService.getPage((int) page.getPages(), pageSize, user);
         }
         return page.getTotal() != 0 ? Result.success(page) : Result.error("查询失败");
     }

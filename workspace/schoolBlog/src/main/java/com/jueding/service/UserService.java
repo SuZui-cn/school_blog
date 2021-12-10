@@ -30,7 +30,7 @@ public interface UserService extends IService<User> {
      * @param pageSize    页数大小
      * @return 返回用户页对象
      */
-    Page<User> getPage(int currentPage, int pageSize);
+    Page<User> getPage(int currentPage, int pageSize, User user);
 
     /**
      * 根据用户名查找用户
@@ -55,5 +55,6 @@ public interface UserService extends IService<User> {
      * @return 是否成功
      */
     boolean delUserById(int id);
+    
 
 }

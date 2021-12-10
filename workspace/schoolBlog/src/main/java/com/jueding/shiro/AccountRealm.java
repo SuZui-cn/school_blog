@@ -37,11 +37,13 @@ public class AccountRealm extends AuthorizingRealm {
 
         String userId = jwtUtils.getClaimByToken((String) jwtToken.getPrincipal()).getSubject();
 
-        User user = userService.getById(Long.valueOf(userId));
+        User user = userService.getById(Integer.valueOf(userId));
+
+//        User user = userService.getById(Long.valueOf(userId));
         if (user == null) {
             throw new UnknownAccountException("账户不存在");
         }
-        
+
 
         AccountProfile profile = new AccountProfile();
         BeanUtil.copyProperties(user, profile);

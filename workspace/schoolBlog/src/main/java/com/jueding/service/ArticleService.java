@@ -3,7 +3,6 @@ package com.jueding.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jueding.entity.Article;
-import com.jueding.entity.User;
 
 import java.util.List;
 
@@ -30,10 +29,18 @@ public interface ArticleService extends IService<Article> {
      *
      * @param currentPage 当前页
      * @param pageSize    每页大小
-     * @param user        文章作者
      * @return 文章页对象
      */
-    Page<Article> getPage(int currentPage, int pageSize, User user);
+    Page<Article> getPage(int currentPage, int pageSize, Article article);
+
+    /**
+     * 根据用户ID查找文章
+     *
+     * @param uid 用户ID
+     * @return 返回文章集合
+     */
+    List<Article> findByUserId(int uid);
+
 
     /**
      * 根据文章id删除文章

@@ -21,12 +21,11 @@ import java.io.IOException;
  * @since 2021-11-29
  */
 @RestController
-@RequestMapping("/api/img")
+@RequestMapping("/api")
 public class ImgController {
 
     @Autowired
     private ImgService imgService;
-
 
     @PostMapping("/imgUpload")
     public String coversUpload(MultipartFile file) throws Exception {
