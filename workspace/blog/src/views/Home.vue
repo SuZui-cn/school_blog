@@ -23,18 +23,31 @@
             <el-card class="info-box box-card">
               <div class="userInfo-box">
                 <div class="userImg-box">
-                  <el-avatar :size="120" :src="require('@/assets/logo.png')"></el-avatar>
+                  <el-avatar
+                    :size="120"
+                    :src="require('@/assets/logo.png')"
+                  ></el-avatar>
                   <!--  <img src="../assets/logo.png" /> -->
                 </div>
-                <div v-if="userInfo !== null && userInfo !== ''" class="userName-box">
+                <div
+                  v-if="userInfo !== null && userInfo !== ''"
+                  class="userName-box"
+                >
                   <span>{{ userInfo.u_name }}</span>
                   <span>{{ userInfo.u_sex === '男' ? '先生' : '女士' }}</span>
                   <span>你好！</span>
                 </div>
               </div>
               <div class="webInfo-box">
-                <button v-show="userInfo === null || userInfo === ''" class="btn btn-primary" @click="login">登录</button>
-                <button class="btn btn-secondary" @click="signoff">注销</button>
+                <button
+                  v-show="userInfo === null || userInfo === ''"
+                  class="btn btn-primary"
+                  @click="login"
+                >登录</button>
+                <button
+                  class="btn btn-secondary"
+                  @click="signoff"
+                >注销</button>
               </div>
             </el-card>
             <!-- 信息展示区 end -->
@@ -43,11 +56,22 @@
             <el-card class="recentAt-box box-card">
               <div class="tool-box">
                 <h6 class="box-title">近期文章</h6>
-                <span class="fresh" @click="findRecentAt()"><i class="bi bi-arrow-clockwise"></i></span>
+                <span
+                  class="fresh"
+                  @click="findRecentAt()"
+                ><i class="bi bi-arrow-clockwise"></i></span>
               </div>
-              <div class="recentAt-cart" v-for="article in recentAtList" :key="article.at_id" @click="toDetailPage(article)">
+              <div
+                class="recentAt-cart"
+                v-for="article in recentAtList"
+                :key="article.at_id"
+                @click="toDetailPage(article)"
+              >
                 <div class="recentAt-img">
-                  <img src="../../src/assets/logo.png" alt="" />
+                  <img
+                    src="../../src/assets/logo.png"
+                    alt=""
+                  />
                 </div>
                 <ul class="recentAt-info">
                   <li class="recentAt-title">{{ article.at_title }}</li>
@@ -63,9 +87,17 @@
             <el-card class="atType-box box-card">
               <div class="tool-box">
                 <h6 class="box-title">文章分类</h6>
-                <span class="fresh" @click="findAtType()"><i class="bi bi-arrow-clockwise"></i></span>
+                <span
+                  class="fresh"
+                  @click="findAtType()"
+                ><i class="bi bi-arrow-clockwise"></i></span>
               </div>
-              <div v-for="type in atTypeList" :key="type.at_type" @click="findAtByType(type)" class="text item type-item">
+              <div
+                v-for="type in atTypeList"
+                :key="type.at_type"
+                @click="findAtByType(type)"
+                class="text item type-item"
+              >
                 <span> {{ type.at_type }}</span>
                 <span> {{ type.count }}</span>
               </div>
@@ -79,34 +111,51 @@
         <el-container>
           <!-- 主体 start -->
           <el-main class="home-main">
-            <div v-for="(item, index) in articleList" :key="item.at_id" @click="toDetailPage(item)" v-bind:class="[index % 2 === 0 ? 'row' : 'row-reverse', 'card article-card']">
+            <div
+              v-for="(item, index) in articleList"
+              :key="item.at_id"
+              @click="toDetailPage(item)"
+              v-bind:class="[index % 2 === 0 ? 'row' : 'row-reverse', 'card article-card']"
+            >
               <div class="img-box col-md-4">
-                <img v-lazy="require('@/assets/images/car.jpg')" class="img-fluid rounded-start" alt="..." />
+                <img
+                  v-lazy="require('@/assets/images/car.jpg')"
+                  class="img-fluid rounded-start"
+                  alt="..."
+                />
               </div>
               <div class="card-body">
                 <div class="card-title">
-                  <h5>{{ item.at_title }}</h5>
+                  <h5>{{ item.atTitle }}</h5>
                   <ul>
-                    <li>{{ item.at_type }}类</li>
-                    <li>作者：{{ item.u_name }}</li>
+                    <li>{{ item.atType }}类</li>
+                    <!-- <li>作者：{{ item.u_name }}</li> -->
                   </ul>
                 </div>
-                <p class="card-text at_abstract">{{ item.ab_abstract }}</p>
-                <p class="card-text at_content">{{ item.at_content }}</p>
+                <p class="card-text at_abstract">{{ item.atAbstract }}</p>
+                <p class="card-text at_content">{{ item.atContent }}</p>
                 <p class="card-text">
-                  <small class="text-muted">{{ item.at_date }}</small>
+                  <small class="text-muted">{{ item.atDate }}</small>
                 </p>
               </div>
             </div>
             <!-- 内容 end -->
             <div class="loading-box">
-              <p v-if="loading" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)"></p>
+              <p
+                v-if="loading"
+                v-loading="loading"
+                element-loading-text="拼命加载中"
+                element-loading-spinner="el-icon-loading"
+                element-loading-background="rgba(0, 0, 0, 0.8)"
+              ></p>
               <p v-if="noMore">没有更多了</p>
             </div>
           </el-main>
           <!-- 主体 end -->
           <!-- 底部 start -->
-          <el-footer class="home-footer footer"><div class="footer-box"></div> </el-footer>
+          <el-footer class="home-footer footer">
+            <div class="footer-box"></div>
+          </el-footer>
           <!-- 底部 end -->
         </el-container>
         <!-- 文章区 end-->
@@ -123,11 +172,11 @@
 <script>
 export default {
   name: 'Home',
-  data() {
+  data () {
     return {
       // 文章列表
       articleList: [
-        { at_id: 1, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了**B1111**\n## 寝室', at_type: '娱乐' },
+        /* { at_id: 1, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了**B1111**\n## 寝室', at_type: '娱乐' },
         { at_id: 2, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
         { at_id: 3, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
         { at_id: 4, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
@@ -136,7 +185,7 @@ export default {
         { at_id: 7, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
         { at_id: 8, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
         { at_id: 9, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 10, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+        { at_id: 10, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' }, */
       ],
       // 用户信息
       /*     userInfo: { u_id: 1, u_name: '兰茂豪', u_password: '', u_sex: '男', u_phone: '', u_email: '', u_head_img: '' }, */
@@ -161,12 +210,14 @@ export default {
       // 每次加载最大文章数
       maxLen: 10,
       // 当前页数
-      curPageNo: 1,
+      curPageNo: 0,
+      // 最大文章数
+      total: 10
     }
   },
 
   // dom加载完后
-  mounted() {
+  mounted () {
     // 特效
     // 获取屏幕高
     const screeHeight = document.documentElement.clientHeight
@@ -204,15 +255,15 @@ export default {
   },
   computed: {
     // 当大于这条时显示没有更多
-    noMore() {
-      return this.articleList.length >= 70
+    noMore () {
+      return this.articleList.length >= this.total
     },
     // 不可滚动条件为加载时或者没有数据时
-    disabled() {
+    disabled () {
       return this.loading || this.noMore
     },
   },
-  created() {
+  created () {
     // 初始化用户信息
     this.initUserInfo()
     // 初始化时加载10个文章
@@ -224,12 +275,12 @@ export default {
   },
   methods: {
     // 登陆后初始化用户信息
-    initUserInfo() {
+    initUserInfo () {
       // 获取并设置用户信息
       this.userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'))
     },
     // 跳转文章详情页
-    toDetailPage(article) {
+    toDetailPage (article) {
       this.$router.push({
         name: 'Detail',
         path: '/detail',
@@ -239,7 +290,7 @@ export default {
       })
     },
     // 加载文章
-    load() {
+    load () {
       if (this.disabled) {
         return
       }
@@ -247,44 +298,51 @@ export default {
       this.loading = true
       // 调用接口分页请求文章
       this.curPageNo++
-      console.log(this.maxLen)
-      const num = this.articleList.length
+      console.log(this.curPageNo)
+      // const num = this.articleList.length
       // 模拟异步请求
-      setTimeout(() => {
-        this.articleList.push(
-          { at_id: num + 1, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-          { at_id: num + 2, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-          { at_id: num + 3, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-          { at_id: num + 4, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-          { at_id: num + 5, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-          { at_id: num + 6, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-          { at_id: num + 7, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-          { at_id: num + 8, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-          { at_id: num + 9, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-          { at_id: num + 10, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' }
-        )
-        this.loading = false
-      }, 4000)
+      this.$axios.get(`/article/getPage/${this.curPageNo}/${this.maxLen}`).then((res) => {
+        this.total = res.data.data.total
+        res.data.data.records.forEach(at => {
+          this.articleList.push(at)
+        })
+      })
+      console.log(this.articleList)
+      // setTimeout(() => {
+      //   this.articleList.push(
+      //     { at_id: num + 1, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+      //     { at_id: num + 2, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+      //     { at_id: num + 3, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+      //     { at_id: num + 4, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+      //     { at_id: num + 5, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+      //     { at_id: num + 6, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+      //     { at_id: num + 7, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+      //     { at_id: num + 8, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+      //     { at_id: num + 9, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+      //     { at_id: num + 10, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' }
+      //   )
+      // }, 4000)
+      this.loading = false
     },
     // 查询近期文章
-    findRecentAt() {
+    findRecentAt () {
       // 调用接口刷新近期文章
     },
     // 查询类型
-    findAtType() {
+    findAtType () {
       // 调用接口刷新每种类型文章数量
     },
     // 分类查询
-    findAtByType(type) {
+    findAtByType (type) {
       // 调用接口查询
       console.log(type)
     },
     // 登录
-    login() {
+    login () {
       this.$router.push('/sign')
     },
     // 注销
-    signoff() {
+    signoff () {
       // 清除session
       window.sessionStorage.clear()
       // 返回登录页
@@ -324,7 +382,7 @@ export default {
     background: url(../../src/assets/images/bl_bg1.jpg) no-repeat;
     background-size: 100% 100%;
     &::before {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
       width: 100%;
@@ -374,7 +432,7 @@ export default {
 
       .home-aside {
         position: relative;
-        width: '300px';
+        width: "300px";
         cursor: pointer;
         // 文字不可选中
         -webkit-user-select: none;
@@ -478,7 +536,7 @@ export default {
                 width: 100%;
                 height: 20px;
                 &::after {
-                  content: '';
+                  content: "";
                   position: absolute;
                   top: 50%;
                   transform: translateY(-50%);

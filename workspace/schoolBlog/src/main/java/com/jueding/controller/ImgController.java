@@ -39,7 +39,7 @@ public class ImgController {
         }
         try {
             file.transferTo(f);
-            String imgURL = "http://localhost:80/api/file/" + f.getName();
+            String imgURL = "http://localhost:1110/api/file/" + f.getName();
             return imgURL;
         } catch (IOException e) {
             e.printStackTrace();

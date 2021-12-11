@@ -39,7 +39,7 @@ public class ArticleController {
      *
      * @return 通用返回集
      */
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getAll")
     public Result getAll() {
         ArrayList<Article> articleList = (ArrayList<Article>) articleService.getAll();
@@ -68,7 +68,7 @@ public class ArticleController {
      * @param article     文章信息（全部查询可为空）
      * @return 通用返回集
      */
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @GetMapping("/getPage/{currentPage}/{pageSize}")
     public Result getPage(@PathVariable("currentPage") int currentPage,
                           @PathVariable("pageSize") int pageSize,

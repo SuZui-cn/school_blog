@@ -7,15 +7,39 @@
             <h5>登录</h5>
           </div>
           <div class="card-body">
-            <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="邮箱" prop="email">
-                <el-input v-model="loginForm.email" placeholder="请输入邮箱"></el-input>
+            <el-form
+              :model="loginForm"
+              status-icon
+              :rules="rules"
+              ref="loginForm"
+              label-width="100px"
+              class="demo-ruleForm"
+            >
+              <el-form-item
+                label="邮箱"
+                prop="email"
+              >
+                <el-input
+                  v-model="loginForm.email"
+                  placeholder="请输入邮箱"
+                ></el-input>
               </el-form-item>
-              <el-form-item label="密码" prop="password">
-                <el-input type="password" v-model="loginForm.password" autocomplete="off" placeholder="请输入密码"></el-input>
+              <el-form-item
+                label="密码"
+                prop="password"
+              >
+                <el-input
+                  type="password"
+                  v-model="loginForm.password"
+                  autocomplete="off"
+                  placeholder="请输入密码"
+                ></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="login('loginForm')">登录</el-button>
+                <el-button
+                  type="primary"
+                  @click="login('loginForm')"
+                >登录</el-button>
                 <el-button @click="register('loginForm')">注册</el-button>
               </el-form-item>
             </el-form>
@@ -25,9 +49,10 @@
     </div>
   </div>
 </template>
-<script>
+<script>import axios from 'axios'
+
 export default {
-  data() {
+  data () {
     return {
       loginForm: {
         email: '',
@@ -42,14 +67,15 @@ export default {
       },
     }
   },
-  created() {
+  created () {
     this.fastlogin()
   },
   methods: {
-    login(formName) {
+    login (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 调用接口验证
+          // axios.post('/')
           // 成功
           // 设置token
           window.sessionStorage.setItem('token', 'token')
@@ -73,11 +99,11 @@ export default {
       })
     },
     // 注册
-    register() {
+    register () {
       this.$router.push('/sign/register')
     },
     // 快捷登录
-    fastlogin() {
+    fastlogin () {
       if (window.sessionStorage.getItem('userInfo')) {
         const email = JSON.parse(window.sessionStorage.getItem('userInfo')).u_email
         this.loginForm.email = email

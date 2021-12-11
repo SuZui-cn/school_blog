@@ -36,13 +36,16 @@ Vue.use(ElementUI)
 Vue.use(mavonEditor)
 Vue.prototype.$ = $
 // 添加token
-axios.interceptors.request.use((config) => {
-  // 为请求头对象，添加token验证的Authorization字段
-  config.headers.Authorization = window.sessionStorage.getItem('token')
-  return config
-})
+// axios.interceptors.request.use((config) => {
+//   // 为请求头对象，添加token验证的Authorization字段
+//   // config.headers.Authorization = window.sessionStorage.getItem('token')
+//   config.headers.Authorization = window.sessionStorage.getItem('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM5MTIyMjQwLCJleHAiOjE2Mzk3MjcwNDB9.fh5uLObiLhwhfdr8LurljExf3M8bd6FGN9dplmGWkSXUhqRI9IEhvQaNbESCWhnn5EFAK2bwKKl0wOP0dCI90A')
+//   return config
+// })
 // 挂载axios
 Vue.prototype.$axios = axios
+axios.defaults.baseURL = 'http://localhost:1110/api'
+
 new Vue({
   router,
   render: (h) => h(App),

@@ -30,8 +30,7 @@ public class Article implements Serializable {
     private Integer atId;
     @NotBlank
     private Integer uId;
-
-
+    
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime atDate;
     @NotBlank
