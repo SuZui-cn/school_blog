@@ -5,4 +5,4 @@ spring:
     username: user
     password: 123456
 server:
-  port: 8080
+  port: 8843

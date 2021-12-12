@@ -64,7 +64,7 @@
               <div
                 class="recentAt-cart"
                 v-for="article in recentAtList"
-                :key="article.at_id"
+                :key="article.atId"
                 @click="toDetailPage(article)"
               >
                 <div class="recentAt-img">
@@ -74,9 +74,9 @@
                   />
                 </div>
                 <ul class="recentAt-info">
-                  <li class="recentAt-title">{{ article.at_title }}</li>
-                  <li class="recentAt-abstract">{{ article.at_abstract }}</li>
-                  <li class="recentAt-date">{{ article.at_date }}</li>
+                  <li class="recentAt-title">{{ article.atTitle }}</li>
+                  <li class="recentAt-abstract">{{ article.atAbstract }}</li>
+                  <li class="recentAt-date">{{ article.atDate }}</li>
                 </ul>
                 <div class="recentAt-divider"></div>
               </div>
@@ -94,11 +94,11 @@
               </div>
               <div
                 v-for="type in atTypeList"
-                :key="type.at_type"
+                :key="type.atType"
                 @click="findAtByType(type)"
                 class="text item type-item"
               >
-                <span> {{ type.at_type }}</span>
+                <span> {{ type.atType }}</span>
                 <span> {{ type.count }}</span>
               </div>
             </el-card>
@@ -113,7 +113,7 @@
           <el-main class="home-main">
             <div
               v-for="(item, index) in articleList"
-              :key="item.at_id"
+              :key="item.atId"
               @click="toDetailPage(item)"
               v-bind:class="[index % 2 === 0 ? 'row' : 'row-reverse', 'card article-card']"
             >
@@ -132,8 +132,8 @@
                     <!-- <li>作者：{{ item.u_name }}</li> -->
                   </ul>
                 </div>
-                <p class="card-text at_abstract">{{ item.atAbstract }}</p>
-                <p class="card-text at_content">{{ item.atContent }}</p>
+                <p class="card-text atAbstract">{{ item.atAbstract }}</p>
+                <!-- <p class="card-text atContent">{{ item.atContent }}</p> -->
                 <p class="card-text">
                   <small class="text-muted">{{ item.atDate }}</small>
                 </p>
@@ -170,40 +170,41 @@
 </template>
 
 <script>
+// import { marked } from '../../node_modules/marked/src/marked'
 export default {
   name: 'Home',
   data () {
     return {
       // 文章列表
       articleList: [
-        /* { at_id: 1, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了**B1111**\n## 寝室', at_type: '娱乐' },
-        { at_id: 2, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 3, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 4, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 5, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 6, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 7, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 8, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 9, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 10, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' }, */
+        /* { atId: 1, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了**B1111**\n## 寝室', atType: '娱乐' },
+        { atId: 2, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 3, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 4, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 5, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 6, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 7, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 8, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 9, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 10, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' }, */
       ],
       // 用户信息
-      /*     userInfo: { u_id: 1, u_name: '兰茂豪', u_password: '', u_sex: '男', u_phone: '', u_email: '', u_head_img: '' }, */
+      /*     userInfo: { uId: 1, u_name: '兰茂豪', u_password: '', u_sex: '男', u_phone: '', u_email: '', u_head_img: '' }, */
       userInfo: '',
       // 近期文章
       recentAtList: [
-        { at_id: 1, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了**B1111**\n## 寝室', at_type: '娱乐' },
-        { at_id: 2, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 3, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 4, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 5, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+        { atId: 1, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了**B1111**\n## 寝室', atType: '娱乐' },
+        { atId: 2, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 3, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 4, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 5, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
       ],
       // 文章分类
       atTypeList: [
-        { at_type: '文学类', count: 5 },
-        { at_type: '生活类', count: 30 },
-        { at_type: '校园类', count: 5 },
-        { at_type: '学术类', count: 10 },
+        { atType: '文学类', count: 5 },
+        { atType: '生活类', count: 30 },
+        { atType: '校园类', count: 5 },
+        { atType: '学术类', count: 10 },
       ],
       // 是否加载中
       loading: false,
@@ -246,7 +247,7 @@ export default {
     }
     // 为gocontent绑定事件，点击快速移到内容区
     document.querySelector('.gocontent').onclick = function () {
-      console.log('a')
+      // console.log('a')
       window.scrollTo(0, document.querySelector('.home-header').offsetHeight)
     }
     // 太阳上升
@@ -298,28 +299,30 @@ export default {
       this.loading = true
       // 调用接口分页请求文章
       this.curPageNo++
-      console.log(this.curPageNo)
+      // console.log(this.curPageNo)
       // const num = this.articleList.length
       // 模拟异步请求
       this.$axios.get(`/article/getPage/${this.curPageNo}/${this.maxLen}`).then((res) => {
         this.total = res.data.data.total
         res.data.data.records.forEach(at => {
+          // this.articleList.push(marked(at))
           this.articleList.push(at)
+          // console.log(at)
         })
       })
-      console.log(this.articleList)
+      // console.log(this.articleList)
       // setTimeout(() => {
       //   this.articleList.push(
-      //     { at_id: num + 1, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-      //     { at_id: num + 2, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-      //     { at_id: num + 3, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-      //     { at_id: num + 4, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-      //     { at_id: num + 5, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-      //     { at_id: num + 6, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-      //     { at_id: num + 7, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-      //     { at_id: num + 8, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-      //     { at_id: num + 9, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-      //     { at_id: num + 10, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' }
+      //     { atId: num + 1, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+      //     { atId: num + 2, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+      //     { atId: num + 3, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+      //     { atId: num + 4, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+      //     { atId: num + 5, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+      //     { atId: num + 6, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+      //     { atId: num + 7, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+      //     { atId: num + 8, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+      //     { atId: num + 9, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+      //     { atId: num + 10, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', ab_abstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' }
       //   )
       // }, 4000)
       this.loading = false
@@ -608,11 +611,11 @@ export default {
                 }
               }
             }
-            .at_abstract {
+            .atAbstract {
               font-size: 20px;
               color: #ccc;
             }
-            .at_content {
+            .atContent {
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;

@@ -6,34 +6,75 @@
           <h5>文章列表</h5>
           <div class="search-frame">
             <div class="input-group flex-nowrap">
-              <input v-model="searchField" type="text" class="search-input form-control" placeholder="搜索文章" aria-label="search" aria-describedby="addon-wrapping" />
-              <span @click="search" class="search-icon input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
+              <input
+                v-model="searchField"
+                type="text"
+                class="search-input form-control"
+                placeholder="搜索文章"
+                aria-label="search"
+                aria-describedby="addon-wrapping"
+              />
+              <span
+                @click="search"
+                class="search-icon input-group-text"
+                id="addon-wrapping"
+              ><i class="bi bi-search"></i></span>
             </div>
           </div>
         </div>
         <div class="atItem-box">
           <el-timeline>
-            <el-timeline-item class="atItem" v-for="article in articleList" :key="article.at_id" :timestamp="article.at_date" placement="top">
+            <el-timeline-item
+              class="atItem"
+              v-for="article in articleList"
+              :key="article.atId"
+              :timestamp="article.atDate"
+              placement="top"
+            >
               <el-card>
                 <div class="atItem-head">
                   <h5>
-                    {{ article.at_title }}
+                    {{ article.atTitle }}
                   </h5>
-                  <span>{{ article.at_type }}类</span>
+                  <span>{{ article.atType }}类</span>
                 </div>
-                <p>{{ article.at_abstract }}</p>
-                <p>{{ article.at_content }}</p>
-                <button type="button" class="btn btn-primary" @click="toDetailPage(article)">查看详情</button>
-                <button type="button" class="btn btn-secondary" @click="alterAt(article)">编辑</button>
-                <el-popconfirm title="这是一段内容确定删除吗？" @confirm="removeAt(article.at_id)">
-                  <el-button slot="reference" type="button" class="btn btn-success">删除</el-button>
+                <p>{{ article.atAbstract }}</p>
+                <p>{{ article.atContent }}</p>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  @click="toDetailPage(article)"
+                >查看详情</button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  @click="alterAt(article)"
+                >编辑</button>
+                <el-popconfirm
+                  title="这是一段内容确定删除吗？"
+                  @confirm="removeAt(article.atId)"
+                >
+                  <el-button
+                    slot="reference"
+                    type="button"
+                    class="btn btn-success"
+                  >删除</el-button>
                 </el-popconfirm>
               </el-card>
             </el-timeline-item>
           </el-timeline>
         </div>
         <div class="paging-box">
-          <el-pagination background @size-change="pageSizeChange" @current-change="getAtListByNo" :current-page="at_info.curPageNo" :total="at_info.at_total" :page-sizes="[3, 4, 5, 6]" :page-size="at_info.pageSize" layout="total, sizes, prev, pager, next, jumper"> </el-pagination>
+          <el-pagination
+            background
+            @size-change="pageSizeChange"
+            @current-change="getAtListByNo"
+            :current-page="at_info.curPageNo"
+            :total="at_info.at_total"
+            :page-sizes="[3, 4, 5, 6]"
+            :page-size="at_info.pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+          > </el-pagination>
         </div>
       </div>
     </div>
@@ -42,7 +83,7 @@
 <script>
 export default {
   name: 'Self',
-  data() {
+  data () {
     return {
       searchField: '',
       // 文章信息
@@ -55,41 +96,41 @@ export default {
         curPageNo: 1,
       }, // 文章列表
       articleList: [
-        { at_id: 1, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了**B1111**\n## 寝室', at_type: '娱乐' },
-        { at_id: 2, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 3, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 4, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
-        { at_id: 5, u_name: '高山流水', at_date: '2021-12-03 14:39:38', at_title: '什么？隔壁B1111寝室惊现', at_abstract: '这是一段神奇的故事', at_content: '昨天去了B1111寝室', at_type: '娱乐' },
+        { atId: 1, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了**B1111**\n## 寝室', atType: '娱乐' },
+        { atId: 2, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 3, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 4, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        { atId: 5, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
       ],
     }
   },
-  created() {
+  created () {
     // 查询文章
     this.findAtList()
   },
   methods: {
     // 查询文章
-    findAtList() {
+    findAtList () {
       // 调用接口查询文章
     },
     // 更新每页数量
-    pageSizeChange(pageSize) {
+    pageSizeChange (pageSize) {
       this.at_info.pageSize = pageSize
     },
     // 分页请求文章
-    getAtListByNo(curpageNo) {
+    getAtListByNo (curpageNo) {
       // 更新当前页
       this.at_info.curPageNo = curpageNo
       // 调用接口返回数据
       console.log(curpageNo + '  ' + this.at_info.pageSize)
     },
     // 搜索文章
-    search() {
+    search () {
       // 搜索内容
       console.log(this.searchField)
     },
     // 跳转文章详情页
-    toDetailPage(article) {
+    toDetailPage (article) {
       this.$router.push({
         name: 'Detail',
         path: '/detail',
@@ -99,7 +140,7 @@ export default {
       })
     },
     // 编辑
-    alterAt(article) {
+    alterAt (article) {
       // 调用编辑接口编辑
       console.log(article)
       // 跳转发布文章页
@@ -112,7 +153,7 @@ export default {
       })
     },
     // 删除
-    removeAt(id) {
+    removeAt (id) {
       // 调用删除接口删除
       console.log(id)
     },

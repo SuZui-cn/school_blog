@@ -9,7 +9,7 @@
  * */
 module.exports = {
   publicPath: './',
-  lintOnSave: false,
+  lintOnSave: true,
   // devServer: {
   //   '/api': {
   //     target: 'http://localhost:1110',

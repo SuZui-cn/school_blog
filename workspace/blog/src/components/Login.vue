@@ -16,12 +16,12 @@
               class="demo-ruleForm"
             >
               <el-form-item
-                label="邮箱"
-                prop="email"
+                label="用户名"
+                prop="username"
               >
                 <el-input
-                  v-model="loginForm.email"
-                  placeholder="请输入邮箱"
+                  v-model="loginForm.username"
+                  placeholder="请输入用户名"
                 ></el-input>
               </el-form-item>
               <el-form-item
@@ -49,47 +49,55 @@
     </div>
   </div>
 </template>
-<script>import axios from 'axios'
+<script>
+// import axios from 'axios'
 
 export default {
   data () {
     return {
       loginForm: {
-        email: '',
+        username: '',
         password: '',
       },
       rules: {
-        email: [
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] },
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          // { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] },
         ],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
       },
     }
   },
-  created () {
-    this.fastlogin()
-  },
+  // created () {
+  //   this.fastlogin()
+  // },
   methods: {
     login (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 调用接口验证
-          // axios.post('/')
-          // 成功
-          // 设置token
-          window.sessionStorage.setItem('token', 'token')
-          // 保存用户信息
-          window.sessionStorage.setItem('userInfo', JSON.stringify({ u_id: 1, u_name: '兰茂豪', u_password: '', u_sex: '男', u_phone: '', u_email: '13567526355@qq.com', u_head_img: '' }))
-          // 显示登录成功
-          this.$message({
-            message: '登录成功！正在跳转...',
-            type: 'success',
-            duration: 1500,
-            onClose: () => {
-              this.$router.push('/home')
-            },
+          this.$axios.post('/login', this.loginForm).then((res) => {
+            if (res.data.code === 400) {
+              this.$message.error('账号或密码错误！')
+              return
+            }
+            console.log(res.header)
+            // 设置token
+            window.sessionStorage.setItem('token', res)
+            // 保存用户信息
+
+            window.sessionStorage.setItem('userInfo', JSON.stringify(res.data.data))
+            // 显示登录成功
+            this.$message({
+              message: '登录成功！正在跳转...',
+              type: 'success',
+              duration: 1500,
+              onClose: () => {
+                this.$router.push('/home')
+              },
+            })
           })
+          // 成功
           // 失败 提示错误
           /*  this.$message.error('账号或密码错误！') */
         } else {
@@ -103,15 +111,15 @@ export default {
       this.$router.push('/sign/register')
     },
     // 快捷登录
-    fastlogin () {
-      if (window.sessionStorage.getItem('userInfo')) {
-        const email = JSON.parse(window.sessionStorage.getItem('userInfo')).u_email
-        this.loginForm.email = email
-      } else if (this.$route.params.loginForm) {
-        console.log(this.$route.params.loginForm)
-        this.loginForm = this.$route.params.loginForm
-      }
-    },
+    // fastlogin () {
+    //   if (window.sessionStorage.getItem('userInfo')) {
+    //     const email = JSON.parse(window.sessionStorage.getItem('userInfo')).u_email
+    //     this.loginForm.email = email
+    //   } else if (this.$route.params.loginForm) {
+    //     console.log(this.$route.params.loginForm)
+    //     this.loginForm = this.$route.params.loginForm
+    //   }
+    // },
   },
 }
 </script>

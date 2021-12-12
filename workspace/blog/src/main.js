@@ -44,7 +44,7 @@ Vue.prototype.$ = $
 // })
 // 挂载axios
 Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://localhost:1110/api'
+axios.defaults.baseURL = 'http://localhost:8843/api'
 
 new Vue({
   router,

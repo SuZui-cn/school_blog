@@ -7,21 +7,58 @@
             <h5>注册</h5>
           </div>
           <div class="card-body">
-            <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="邮箱" prop="email">
-                <el-input v-model="registerForm.email" placeholder="请输入邮箱"></el-input>
+            <el-form
+              :model="registerForm"
+              status-icon
+              :rules="rules"
+              ref="registerForm"
+              label-width="100px"
+              class="demo-ruleForm"
+            >
+              <el-form-item
+                label="邮箱"
+                prop="email"
+              >
+                <el-input
+                  v-model="registerForm.email"
+                  placeholder="请输入邮箱"
+                ></el-input>
               </el-form-item>
-              <el-form-item label="密码" prop="password">
-                <el-input type="password" v-model="registerForm.password" autocomplete="off" placeholder="请输入密码"></el-input>
+              <el-form-item
+                label="密码"
+                prop="password"
+              >
+                <el-input
+                  type="password"
+                  v-model="registerForm.password"
+                  autocomplete="off"
+                  placeholder="请输入密码"
+                ></el-input>
               </el-form-item>
               <div class="check-code-box">
-                <el-form-item label="验证码" prop="checkcode">
-                  <el-input type="text" v-model="registerForm.checkcode" autocomplete="off" placeholder="请输入验证码"></el-input>
+                <el-form-item
+                  label="验证码"
+                  prop="checkcode"
+                >
+                  <el-input
+                    type="text"
+                    v-model="registerForm.checkcode"
+                    autocomplete="off"
+                    placeholder="请输入验证码"
+                  ></el-input>
                 </el-form-item>
-                <input type="button" class="code-btn btn btn-secondary" v-model="time" @click="getCheckCode()" />
+                <input
+                  type="button"
+                  class="code-btn btn btn-secondary"
+                  v-model="time"
+                  @click="getCheckCode()"
+                />
               </div>
               <el-form-item>
-                <el-button type="primary" @click="login">登录</el-button>
+                <el-button
+                  type="primary"
+                  @click="login"
+                >登录</el-button>
                 <el-button @click="register('registerForm')">注册</el-button>
               </el-form-item>
             </el-form>
@@ -33,7 +70,7 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       registerForm: {
         email: '',
@@ -54,7 +91,7 @@ export default {
   },
   methods: {
     // 注册
-    register(formName) {
+    register (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 调用接口验证
@@ -86,11 +123,11 @@ export default {
       })
     },
     // 登录
-    login() {
+    login () {
       this.$router.push('/sign')
     },
     // 获取验证码
-    getCheckCode() {
+    getCheckCode () {
       // 验证码倒计时
       this.setTime()
       // 掉用接口向指定邮箱发送验证码
@@ -98,7 +135,7 @@ export default {
       console.log(this.registerForm.email)
     },
     // 验证码倒计时
-    async setTime() {
+    async setTime () {
       let num = 60
       this.time = num-- + 's'
       clearInterval(this.timer)

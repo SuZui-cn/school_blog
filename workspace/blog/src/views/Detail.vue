@@ -13,7 +13,7 @@
             </div>
           </div>
           <span>作者：{{ article.u_name }}</span>
-          <span>文章类型：{{ article.at_type }}类</span>
+          <span>文章类型：{{ article.atType }}类</span>
           <div
             class="back-box"
             @click="back"
@@ -34,7 +34,7 @@
           <h5
             style="text-align: center"
             class="card-title"
-          >{{ article.at_title }}</h5>
+          >{{ article.atTitle }}</h5>
           <p
             class="card-text"
             v-html="mark_at"

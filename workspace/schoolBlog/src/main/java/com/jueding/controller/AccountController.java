@@ -18,11 +18,14 @@ import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author 北落燕门
@@ -42,6 +45,7 @@ public class AccountController {
 
     @PostMapping("/login")
     public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
+        System.out.println(loginDto);
         User user = userService.getOne(new QueryWrapper<User>().eq("u_name", loginDto.getUsername()));
         Assert.notNull(user, "用户不存在");
         if (!user.getUPassword().equals(DigestUtils.md5DigestAsHex(loginDto.getPassword()
@@ -53,12 +57,13 @@ public class AccountController {
         response.setHeader("Authorization", jwt);
         response.setHeader("Access-control-Expose-Headers", "Authorization");
 
-        return Result.success(MapUtil.builder()
+
+        return Result.success("登录成功", MapUtil.builder()
                 .put("id", user.getUId())
-                .put("username", user.getUName())
-                .put("sex", user.getUSex())
+                .put("u_name", user.getUName())
+                .put("u_sex", user.getUSex())
                 .put("phone", user.getUPhone())
-                .put("email", user.getUEmail())
+                .put("u_email", user.getUEmail())
                 .map()
         );
     }
@@ -69,7 +74,55 @@ public class AccountController {
         String randomString = StringUtils.getRandomString(6);
         EmailUtil.sendEmail(email, randomString);
         log.info(randomString);
+        Jedis jedis = new Jedis();
+        jedis.set("code", randomString);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Jedis jedis1 = new Jedis();
+                if (jedis1.get("code") != null) {
+                    jedis1.del("code");
+                }
+                timer.cancel();
+            }
+        }, 1000 * 60);
+//        ScheduledThreadPoolExecutor executor = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(10);
+//        executor.schedule(new Runnable() {
+//            @Override
+//            public void run() {
+//                Jedis jedis1 = new Jedis();
+//                if (jedis1.get("code") != null) {
+//                    jedis1.del("code");
+//                }
+//            }
+//        }, 1000 * 60, TimeUnit.SECONDS);
+//        executor.shutdown();
         return Result.success("邮件发送成功", null);
+    }
+
+    @GetMapping("/checkCode")
+    public Result checkCode(@RequestParam("email") String email,
+                            @RequestParam("code") String code,
+                            HttpServletResponse response) {
+        Jedis jedis = new Jedis();
+        String MyCode = jedis.get("code");
+        if (code.equals(MyCode)) {
+            User user = userService.getOne(new QueryWrapper<User>().eq("u_email", email));
+            Assert.notNull(user, "用户不存在");
+            String jwt = jwtUtils.generateToken(user.getUId());
+            response.setHeader("Authorization", jwt);
+            response.setHeader("Access-control-Expose-Headers", "Authorization");
+            return Result.success("登录成功", MapUtil.builder()
+                    .put("id", user.getUId())
+                    .put("username", user.getUName())
+                    .put("sex", user.getUSex())
+                    .put("phone", user.getUPhone())
+                    .put("email", user.getUEmail())
+                    .map()
+            );
+        }
+        return Result.error("验证码错误");
     }
 
     @PostMapping("/register")
@@ -79,7 +132,7 @@ public class AccountController {
             return Result.error("注册失败，用户名已注册");
         } else {
             user.setUPassword(DigestUtils.md5DigestAsHex(user.getUPassword().getBytes(StandardCharsets.UTF_8)));
-            return userService.save(user) ? Result.success("注册成功") : Result.error();
+            return userService.save(user) ? Result.success("注册成功", null) : Result.error();
         }
     }
 

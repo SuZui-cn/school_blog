@@ -1,5 +1,5 @@
 server:
-  port: 1110
+  port: 8843
 spring:
   datasource:
     druid:
@@ -16,7 +16,7 @@ mybatis-plus:
 jueding:
   jwt:
     secret: f4e2e52034348f86b67cde581c0f9eb5
-    expire: 604800
+    expire: 3600
     header: Authorization
 shiro-redis:
   enabled: true
