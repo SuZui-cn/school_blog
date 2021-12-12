@@ -36,7 +36,7 @@
                   <h5>
                     {{ article.atTitle }}
                   </h5>
-                  <span>{{ article.atType }}类</span>
+                  <span>{{ article.atType }}</span>
                 </div>
                 <p>{{ article.atAbstract }}</p>
                 <!--  <p
@@ -199,8 +199,24 @@ export default {
     },
     // 删除
     removeAt (id) {
+      let index = 0
       // 调用删除接口删除
-      console.log(id)
+      // console.log(id)
+      this.$axios.delete(`/article/${id}`).then((res) => {
+        if (res.data.code === 400) {
+          this.$message.error('删除失败')
+          return
+        }
+        this.$message.success('删除成功')
+        this.articleList.some(article => {
+          if (article.atId === id) {
+            // console.log(id + ' ' + index)
+            this.articleList.splice(index, 1)
+            return true
+          }
+          index++
+        })
+      })
     },
   },
 }

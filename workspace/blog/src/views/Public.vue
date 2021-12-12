@@ -29,7 +29,7 @@
           required
         />
       </div>
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label
           for="atDate"
           class="form-label"
@@ -54,7 +54,7 @@
           id="at_time"
           required
         />
-      </div>
+      </div> -->
       <div class="mb-3">
         <label
           for="atType"
@@ -72,7 +72,7 @@
           <option value="学术类">学术类</option>
         </select>
       </div>
-      <label
+      <!-- <label
         for=""
         class="form-label"
       >添加背景图片</label>
@@ -85,7 +85,7 @@
         >
           <i class="el-icon-plus"></i>
         </el-upload>
-      </div>
+      </div> -->
       <div class="mb-3">
         <el-button
           class="btn btn-light"
@@ -146,7 +146,7 @@ export default {
         atTitle: '',
         atContent: '',
         atAbstract: '',
-        atDate: '',
+        // atDate: '',
         atType: '',
       },
       // 转为html的文章内容
@@ -157,14 +157,17 @@ export default {
   },
   created () {
     // 获取文章
-    if (window.sessionStorage.getItem('article')) {
-      this.article = JSON.parse(window.sessionStorage.getItem('article'))
+
+    if (typeof this.$route.params.article !== 'undefined') {
+      // 获取文章
+      this.article = this.$route.params.article
+      // 推入localstorage
+      window.sessionStorage.setItem('article', JSON.stringify(this.article))
+    } else if (typeof this.$route.params.article === 'undefined') {
+      window.sessionStorage.removeItem('article')
     } else {
-      if (typeof this.$route.params.article !== 'undefined') {
-        // 获取文章
-        this.article = this.$route.params.article
-        // 推入localstorage
-        window.sessionStorage.setItem('article', JSON.stringify(this.article))
+      if (window.sessionStorage.getItem('article')) {
+        this.article = JSON.parse(window.sessionStorage.getItem('article'))
       }
     }
   },
@@ -178,9 +181,18 @@ export default {
     // 发布文章
     submit () {
       // 调用接口上传文章
-      console.log(this.article)
-      console.log(this.html)
-      this.$message.success('提交成功，已打印至控制台！')
+      // console.log(this.article)
+      // console.log(this.html)
+      // this.$message.success('提交成功，已打印至控制台！')
+      const uid = JSON.parse(window.sessionStorage.getItem('userInfo')).id
+      this.$axios.post(`/article/save/${uid}`, this.article).then((res) => {
+        console.log(this.article)
+        if (res.data.code === 400) {
+          this.$message.error('提交失败')
+          return
+        }
+        this.$message.success('提交成功')
+      })
     },
     // 图片上传关闭
     handleRemove (file, fileList) {

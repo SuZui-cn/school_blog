@@ -7,6 +7,7 @@ import Self from '../views/Self.vue'
 import Sign from '../views/Sign.vue'
 import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
+import axios from 'axios'
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,14 @@ router.beforeEach((to, from, next) => {
   // 判断是否要跳转到权限页
   if (targetPaths.indexOf(to.path) !== -1) {
     const token = sessionStorage.getItem('token')
+    if (token !== null) {
+      // 添加token
+      axios.interceptors.request.use((config) => {
+        // 为请求头对象，添加token验证的Authorization字段
+        config.headers.Authorization = token
+        return config
+      })
+    }
     // 有token 放行
     if (token) {
       next()

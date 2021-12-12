@@ -35,13 +35,16 @@ Vue.use(VueLazyload, {
 Vue.use(ElementUI)
 Vue.use(mavonEditor)
 Vue.prototype.$ = $
+/* router.beforeEach(to,from,next){
+  if(to.path.indexOf('/login'))
+} */
 // 添加token
-axios.interceptors.request.use((config) => {
-  // 为请求头对象，添加token验证的Authorization字段
-  // config.headers.Authorization = window.sessionStorage.getItem('token')
-  config.headers.Authorization = window.sessionStorage.getItem('token')
-  return config
-})
+// axios.interceptors.request.use((config) => {
+//   // 为请求头对象，添加token验证的Authorization字段
+//   // config.headers.Authorization = window.sessionStorage.getItem('token')
+//   config.headers.Authorization = window.sessionStorage.getItem('token')
+//   return config
+// })
 // 挂载axios
 Vue.prototype.$axios = axios
 axios.defaults.baseURL = 'http://localhost:8843/api'

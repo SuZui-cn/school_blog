@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class ArticleController {
     }
 
     /**
-     * 保存文章接口
+     * 保存文章接口,如果文章ID存在则进行修改
      *
      * @param article 文章实体
      * @return 通用返回集
@@ -91,8 +92,15 @@ public class ArticleController {
     @PostMapping("/save/{id}")
     public Result save(@Validated @RequestBody Article article, @PathVariable("id") int id) {
         List<User> userById = userService.findUserById(id);
+        article.setUId(id);
         if (userById.size() == 0) {
             return Result.error();
+        }
+        article.setAtDate(LocalDateTime.now());
+        boolean flag = articleService.updateById(article);
+        log.info(String.valueOf(flag));
+        if (flag) {
+            return Result.success();
         }
         return articleService.save(article) ? Result.success() : Result.error();
     }
@@ -103,12 +111,12 @@ public class ArticleController {
      * @param article 文章实体
      * @return 通用返回集
      */
-    @PutMapping
-    @RequiresAuthentication
-    public Result updataArticle(@Validated @RequestBody Article article) {
-        boolean flag = articleService.updateById(article);
-        return flag ? Result.success() : Result.error("操作失败");
-    }
+//    @PutMapping
+//    @RequiresAuthentication
+//    public Result updataArticle(@Validated @RequestBody Article article) {
+//        boolean flag = articleService.updateById(article);
+//        return flag ? Result.success() : Result.error("操作失败");
+//    }
 
     /**
      * 删除文章接口
