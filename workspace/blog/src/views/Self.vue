@@ -39,7 +39,10 @@
                   <span>{{ article.atType }}类</span>
                 </div>
                 <p>{{ article.atAbstract }}</p>
-                <p>{{ article.atContent }}</p>
+                <!--  <p
+                  class="at_content"
+                  v-html="mark_at()"
+                ></p> -->
                 <button
                   type="button"
                   class="btn btn-primary"
@@ -81,6 +84,9 @@
   </div>
 </template>
 <script>
+/* import { marked } from '../../node_modules/marked/src/marked'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css' */
 export default {
   name: 'Self',
   data () {
@@ -96,11 +102,11 @@ export default {
         curPageNo: 1,
       }, // 文章列表
       articleList: [
-        { atId: 1, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了**B1111**\n## 寝室', atType: '娱乐' },
-        { atId: 2, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
-        { atId: 3, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
-        { atId: 4, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
-        { atId: 5, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        // { atId: 1, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了**B1111**\n## 寝室', atType: '娱乐' },
+        // { atId: 2, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        // { atId: 3, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        // { atId: 4, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
+        // { atId: 5, u_name: '高山流水', atDate: '2021-12-03 14:39:38', atTitle: '什么？隔壁B1111寝室惊现', atAbstract: '这是一段神奇的故事', atContent: '昨天去了B1111寝室', atType: '娱乐' },
       ],
     }
   },
@@ -108,10 +114,49 @@ export default {
     // 查询文章
     this.findAtList()
   },
+  computed: {
+    /**
+     *文章转为markdown后渲染
+     *  */
+    /* mark_at (atContent) {
+      console.log(atContent)
+      // 渲染内容为markdown格式
+      return atContent ? marked(atContent) : ''
+    }, */
+  },
+  /*  mounted () {
+    // marked配置
+    marked.setOptions({
+      renderer: new marked.Renderer(),
+      highlight: function (code) {
+        return hljs.highlightAuto(code).value
+      },
+      pedantic: false,
+      gfm: true,
+      tables: true,
+      breaks: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false,
+      xhtml: false,
+    })
+  }, */
   methods: {
+    /*  mark_at (atContent) {
+      console.log(atContent)
+      // 渲染内容为markdown格式
+      return atContent ? marked(atContent) : ''
+    }, */
     // 查询文章
     findAtList () {
+      const uid = JSON.parse(window.sessionStorage.getItem('userInfo')).id
+      console.log(uid)
       // 调用接口查询文章
+      this.$axios.get(`/article/getOne/${uid}`).then((res) => {
+        res.data.data.forEach(element => {
+          this.articleList.push(element)
+        })
+      })
     },
     // 更新每页数量
     pageSizeChange (pageSize) {
@@ -186,6 +231,9 @@ export default {
         .atItem-head {
           display: flex;
           justify-content: space-between;
+        }
+        .at_content {
+          white-space: nowrap;
         }
       }
       .paging-box {

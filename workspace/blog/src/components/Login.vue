@@ -81,9 +81,8 @@ export default {
               this.$message.error('账号或密码错误！')
               return
             }
-            console.log(res.header)
             // 设置token
-            window.sessionStorage.setItem('token', res)
+            window.sessionStorage.setItem('token', res.headers.authorization)
             // 保存用户信息
 
             window.sessionStorage.setItem('userInfo', JSON.stringify(res.data.data))

@@ -16,7 +16,6 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.Jedis;
 
@@ -41,10 +40,9 @@ public class AccountController {
 
     @Autowired
     JwtUtils jwtUtils;
-
-
+    
     @PostMapping("/login")
-    public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
+    public Result login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         System.out.println(loginDto);
         User user = userService.getOne(new QueryWrapper<User>().eq("u_name", loginDto.getUsername()));
         Assert.notNull(user, "用户不存在");
