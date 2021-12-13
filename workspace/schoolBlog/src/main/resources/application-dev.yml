@@ -7,6 +7,7 @@ spring:
       url: jdbc:mysql://localhost:3306/school_blog?UseUnicode=true&characterEncoding=UTF-8
       username: user
       password: 123456
+
 mybatis-plus:
   global-config:
     db-config:
@@ -18,6 +19,7 @@ jueding:
     secret: f4e2e52034348f86b67cde581c0f9eb5
     expire: 3600
     header: Authorization
+
 shiro-redis:
   enabled: true
   redis-manager:

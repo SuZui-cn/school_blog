@@ -1,8 +1,24 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql:///bookstore?UseUnicode=True&CharacterEncoding=UTF-8
-    username: user
-    password: 123456
+    url: jdbc:mysql://8.130.28.198:3306/school_blog?UseUnicode=True&CharacterEncoding=UTF-8
+    username: school_blog
+    password: KpPykpzxRJjamTDk
 server:
   port: 8843
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      table-prefix: blog_
+
+jueding:
+  jwt:
+    secret: f4e2e52034348f86b67cde581c0f9eb5
+    expire: 3600
+    header: Authorization
+shiro-redis:
+  enabled: true
+  redis-manager:
+    host: 127.0.0.1:6379
