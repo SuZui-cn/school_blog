@@ -33,8 +33,8 @@
                   v-if="userInfo !== null && userInfo !== ''"
                   class="userName-box"
                 >
-                  <span>{{ userInfo.u_name }}</span>
-                  <span>{{ userInfo.u_sex === '男' ? '先生' : '女士' }}</span>
+                  <span>{{ userInfo.username }}</span>
+                  <span>{{ userInfo.sex === '男' ? '先生' : '女士' }}</span>
                   <span>你好！</span>
                 </div>
               </div>
@@ -279,6 +279,7 @@ export default {
     initUserInfo () {
       // 获取并设置用户信息
       this.userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'))
+      console.log(this.userInfo)
     },
     // 跳转文章详情页
     toDetailPage (article) {

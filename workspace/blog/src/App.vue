@@ -3,7 +3,7 @@
     <!-- 导航 start -->
     <el-header
       class="header"
-      v-if="['/sign/login', '/sign/register'].indexOf(this.$route.path) === -1"
+      v-if="['/sign/login', '/sign/register','/sign/emailLogin'].indexOf(this.$route.path) === -1"
     >
       <nav
         class="navbar navbar-expand-lg navbar-dark"

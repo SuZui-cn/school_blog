@@ -20,6 +20,10 @@ import '../src/assets/css/common.css'
 // 导入编辑器
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+// 在main.js引入qs
+import qs from 'qs'
+// 配全局属性配置，在任意组件内可以使用this.$qs获取qs对象
+Vue.prototype.$qs = qs
 Vue.config.productionTip = false
 // 使用懒加载
 Vue.use(VueLazyload, {
@@ -46,6 +50,7 @@ Vue.prototype.$ = $
 //   return config
 // })
 // 挂载axios
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.prototype.$axios = axios
 axios.defaults.baseURL = 'http://localhost:8843/api'
 

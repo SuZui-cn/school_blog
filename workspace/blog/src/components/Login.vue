@@ -41,6 +41,7 @@
                   @click="login('loginForm')"
                 >登录</el-button>
                 <el-button @click="register('loginForm')">注册</el-button>
+                <el-button @click="emailLogin('loginForm')">邮箱登录</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -109,6 +110,9 @@ export default {
     register () {
       this.$router.push('/sign/register')
     },
+    emailLogin () {
+      this.$router.push('/sign/emailLogin')
+    }
     // 快捷登录
     // fastlogin () {
     //   if (window.sessionStorage.getItem('userInfo')) {

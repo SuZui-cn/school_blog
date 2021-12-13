@@ -11,7 +11,7 @@
     <groupId>com.jueding</groupId>
     <artifactId>schoolBlog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>schoolBlog</name>
     <description>Demo project for Spring Boot</description>
     <properties>

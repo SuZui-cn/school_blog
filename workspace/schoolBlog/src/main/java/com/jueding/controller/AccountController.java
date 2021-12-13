@@ -40,7 +40,7 @@ public class AccountController {
 
     @Autowired
     JwtUtils jwtUtils;
-    
+
     @PostMapping("/login")
     public Result login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         System.out.println(loginDto);
@@ -67,8 +67,8 @@ public class AccountController {
     }
 
 
-    @GetMapping("/emailLogin")
-    public Result emailLogin(@RequestParam("email") String email) throws MessagingException, javax.mail.MessagingException, GeneralSecurityException {
+    @GetMapping("/emailLogin/{email}")
+    public Result emailLogin(@PathVariable String email) throws MessagingException, javax.mail.MessagingException, GeneralSecurityException {
         String randomString = StringUtils.getRandomString(6);
         EmailUtil.sendEmail(email, randomString);
         log.info(randomString);
@@ -99,14 +99,14 @@ public class AccountController {
         return Result.success("邮件发送成功", null);
     }
 
-    @GetMapping("/checkCode")
-    public Result checkCode(@RequestParam("email") String email,
-                            @RequestParam("code") String code,
+    @PostMapping("/checkCode")
+    public Result checkCode(@RequestBody LoginDto loginDto,
                             HttpServletResponse response) {
         Jedis jedis = new Jedis();
+        System.out.println(loginDto);
         String MyCode = jedis.get("code");
-        if (code.equals(MyCode)) {
-            User user = userService.getOne(new QueryWrapper<User>().eq("u_email", email));
+        if (loginDto.getCheckcode().equals(MyCode)) {
+            User user = userService.getOne(new QueryWrapper<User>().eq("u_email", loginDto.getEmail()));
             Assert.notNull(user, "用户不存在");
             String jwt = jwtUtils.generateToken(user.getUId());
             response.setHeader("Authorization", jwt);
@@ -123,11 +123,16 @@ public class AccountController {
         return Result.error("验证码错误");
     }
 
-    @PostMapping("/register")
+    /*@PostMapping("/register")*/
+    @RequestMapping("/register")
     public Result register(@RequestBody User user) {
+        log.info(String.valueOf(user));
         List<User> users = userService.findUserByName(user.getUName());
         if (users.size() > 0) {
             return Result.error("注册失败，用户名已注册");
+        } else if (user.getUPassword() == null || user.getUName() == null) {
+            return Result.error("注册失败");
+
         } else {
             user.setUPassword(DigestUtils.md5DigestAsHex(user.getUPassword().getBytes(StandardCharsets.UTF_8)));
             return userService.save(user) ? Result.success("注册成功", null) : Result.error();

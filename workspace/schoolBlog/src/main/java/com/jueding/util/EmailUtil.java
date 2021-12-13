@@ -1,7 +1,6 @@
 package com.jueding.util;
 
 import com.sun.mail.util.MailSSLSocketFactory;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

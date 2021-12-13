@@ -7,6 +7,7 @@ import Self from '../views/Self.vue'
 import Sign from '../views/Sign.vue'
 import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
+import EmailLogin from '../components/EmailLogin.vue'
 import axios from 'axios'
 
 Vue.use(VueRouter)
@@ -21,6 +22,7 @@ const routes = [
       { path: '', redirect: '/sign/login' },
       { path: 'login', name: 'Login', component: Login },
       { path: 'register', name: 'Register', component: Register },
+      { path: 'emailLogin', name: 'EmailLogin', component: EmailLogin },
     ],
   },
   { path: '/home', name: 'Home', component: Home },
@@ -37,7 +39,7 @@ router.beforeEach((to, from, next) => {
   // 判断是否要跳转到权限页
   if (targetPaths.indexOf(to.path) !== -1) {
     const token = sessionStorage.getItem('token')
-    if (token !== null) {
+    if (token !== null || typeof token === 'undefined') {
       // 添加token
       axios.interceptors.request.use((config) => {
         // 为请求头对象，添加token验证的Authorization字段
