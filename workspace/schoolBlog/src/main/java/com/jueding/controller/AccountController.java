@@ -37,7 +37,6 @@ public class AccountController {
     @Autowired
     UserService userService;
 
-
     @Autowired
     JwtUtils jwtUtils;
 
@@ -69,11 +68,13 @@ public class AccountController {
 
     @GetMapping("/emailLogin/{email}")
     public Result emailLogin(@PathVariable String email) throws MessagingException, javax.mail.MessagingException, GeneralSecurityException {
+        log.info("接受邮件请求");
         String randomString = StringUtils.getRandomString(6);
         EmailUtil.sendEmail(email, randomString);
         log.info(randomString);
         Jedis jedis = new Jedis();
         jedis.set("code", randomString);
+        log.info("将验证码存入缓存");
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--    <meta charset="UTF-8" />-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>绝顶聪明2.0</title>
+    <!--    <link rel="stylesheet" href="/css/style.css" />-->
+    <link rel="stylesheet" type="text/css" href="../css/css.css" />
+  </head>
+  <body>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/vue.js"></script>
+    <script>
+      /*$(function () {
+        //给登录按钮绑定单击事件
+        $('#btn').click(function () {
+          let serialize = $('#login').serialize();
+          // var serializeUrl = $('#login').serialize();
+          console.log(serialize);
+          $.post('/login', serialize, function (data) {
+            data.flag = true;
+            if (data.flag) {
+              // var serialize = $('#login').serialize();
+              location.href = 'user.html';
+            } else {
+              // var serializeUrl = $("#login").serialize();
+              console.log(data);
+              alert('用户名或密码错误，登录失败...');
+            }
+          });
+        });
+      });*/
+    </script>
+    <!--    <div class="switch">-->
+    <!--      <h2>没有账号？</h2>-->
+    <!--      <a href="register.html">注册账号</a>-->
+    <!--    </div>-->
+    <div id="app" class="main">
+      <form id="login" accept-charset="utf-8">
+        <h1>欢迎访问</h1>
+        <input
+          name="name"
+          v-model="FormData.name"
+          type="text"
+          placeholder="姓名"
+          onblur="check(this)"
+          required
+        />
+        <input
+          v-model="FormData.stu_id"
+          name="stu_id"
+          type="password"
+          placeholder="学号"
+          required
+        />
+        <button type="button" id="btn" class="btn" @click="login()">
+          登录
+        </button>
+      </form>
+    </div>
+    <script src="../js/axios-0.18.0.js"></script>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          FormData: {
+            name: '',
+            stu_id: '',
+          },
+        },
+        methods: {
+          login() {
+            axios.post('/login', this.FormData).then((data) => {
+              console.log(data);
+              if (data.data.flag) {
+                // var serialize = $('#login').serialize();
+                location.href = 'user.html';
+              } else {
+                // var serializeUrl = $("#login").serialize();
+                console.log(data);
+                alert('用户名或密码错误，登录失败...');
+              }
+            });
+          },
+        },
+      });
+      function check(obj) {
+        re = /[\'\"\%\#\^\*\@\!]/g;
+        obj.value = obj.value.trim();
+        var str = obj.value;
+        if (re.test(str)) {
+          alert('存在非法字符`"%#@!');
+          obj.value = '';
+        }
+      }
+    </script>
+  </body>
+</html>
