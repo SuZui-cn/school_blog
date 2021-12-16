@@ -129,7 +129,7 @@
                   <h5>{{ item.atTitle }}</h5>
                   <ul>
                     <li>{{ item.atType }}</li>
-                    <!-- <li>作者：{{ item.u_name }}</li> -->
+                    <li>作者：{{ item.uname }}</li>
                   </ul>
                 </div>
                 <p class="card-text atAbstract">{{ item.atAbstract }}</p>

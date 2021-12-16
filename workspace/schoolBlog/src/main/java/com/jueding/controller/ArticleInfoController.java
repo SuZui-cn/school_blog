@@ -3,6 +3,7 @@ package com.jueding.controller;
 
 import com.jueding.common.lang.Result;
 import com.jueding.service.ArticleService;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ public class ArticleInfoController {
     @Autowired
     private ArticleService articleService;
 
+    @RequiresAuthentication
     @GetMapping("/support/{atId}/{uId}")
     public Result support(@PathVariable("atId") int atId,
                           @PathVariable("uId") int uId) {
@@ -31,6 +33,7 @@ public class ArticleInfoController {
         return null;
     }
 
+    @RequiresAuthentication
     @GetMapping("/collection/{atId}/{uId}")
     public Result collection(@PathVariable("atId") int atId,
                              @PathVariable("uId") int uId) {

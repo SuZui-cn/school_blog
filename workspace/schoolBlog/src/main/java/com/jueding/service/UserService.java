@@ -2,6 +2,7 @@ package com.jueding.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jueding.common.dto.LoginDto;
 import com.jueding.entity.User;
 
 import java.util.List;
@@ -48,6 +49,16 @@ public interface UserService extends IService<User> {
      */
     List<User> findUserById(int id);
 
+
+    /**
+     * 根据用户邮箱查找用户
+     *
+     * @param email 用户邮箱
+     * @return 返回用户集合
+     */
+    List<User> findUserByEmail(String email);
+
+
     /**
      * 根据Id删除用户
      *
@@ -55,6 +66,14 @@ public interface UserService extends IService<User> {
      * @return 是否成功
      */
     boolean delUserById(int id);
-    
+
+
+    /**
+     * 根据邮箱修改密码
+     *
+     * @return 是否成功
+     */
+    boolean updatePwdByEmail(LoginDto loginDto);
+
 
 }

@@ -1,6 +1,7 @@
 package com.jueding.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -41,6 +42,9 @@ public class Article implements Serializable {
     private String atContent;
 
     private String atType;
+
+    @TableField(exist = false)
+    private String uName;
 
 
 }

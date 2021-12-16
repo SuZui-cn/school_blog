@@ -140,8 +140,27 @@ public class AccountController {
         }
     }
 
+    @PostMapping("/forgetPwd")
+    public Result forgetPwd(@RequestBody LoginDto loginDto) {
+        List<User> userByEmail = userService.findUserByEmail(loginDto.getEmail());
+        if (userByEmail.isEmpty()) {
+            return Result.error("该邮箱用户不存在");
+        }
+        Jedis jedis = new Jedis();
+        String code = jedis.get("code");
+        if (loginDto.getCheckcode().equals(code)) {
+            boolean flag = userService.updatePwdByEmail(loginDto);
+            if (flag) {
+                return Result.success("重置密码成功");
+            }
+        }
+        return Result.error("重置密码失败");
+    }
+
+
     @RequiresAuthentication
     @GetMapping("/logout")
+
     public Result logout() {
         SecurityUtils.getSubject().logout();
         return Result.success(null);

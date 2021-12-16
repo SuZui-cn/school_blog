@@ -6,6 +6,7 @@ import com.jueding.common.lang.Result;
 import com.jueding.entity.User;
 import com.jueding.service.ArticleService;
 import com.jueding.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
@@ -24,6 +25,7 @@ import java.util.List;
  * @author 北落燕门
  * @since 2021-11-29
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -65,6 +67,7 @@ public class UserController {
     public Result getPage(@PathVariable("currentPage") int currentPage,
                           @PathVariable("pageSize") int pageSize,
                           User user) {
+        log.error(String.valueOf(user));
         Page<User> page = userService.getPage(currentPage, pageSize, user);
         //请求页数超过总页数时重新查询
         if (currentPage > page.getPages()) {
@@ -110,7 +113,7 @@ public class UserController {
      */
     @PutMapping
     @RequiresAuthentication
-    public Result update(@Validated @RequestBody User user) {
+    public Result update(@RequestBody User user) {
         boolean flag = userService.updateById(user);
         return flag ? Result.success() : Result.error();
     }

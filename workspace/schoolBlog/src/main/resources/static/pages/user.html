@@ -66,18 +66,18 @@
             </el-button>
             <!-- 性别复选框 -->
             <!-- <el-select
-              v-model="options.value"
-              clearable
-              placeholder="请选择性别"
-            >
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select> -->
+                  v-model="options.value"
+                  clearable
+                  placeholder="请选择性别"
+                >
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select> -->
           </div>
 
           <el-table
@@ -241,7 +241,7 @@
                 <el-row>
                   <el-col :span="12">
                     <el-form-item label="邮箱" prop="uemail">
-                      <el-input v-model="formData.email"></el-input>
+                      <el-input v-model="formData.uemail"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -284,7 +284,7 @@
       // 为请求头对象，添加token验证的Authorization字段
       // config.headers.Authorization = token;
       config.headers.Authorization =
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM5Mzk3NzU0LCJleHAiOjE2Mzk0MDEzNTR9.vwpc8244Dopmrhkp5YeOVU2R1oVaw-g51pDsd675mO-IeDMGQltAwg0fIQZ43Lh6knIzAe6Wfov4zPsE-oJYmA';
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM5NjQ5NDQ2LCJleHAiOjE2Mzk2NTMwNDZ9.lI8BQY8UK648leZWAiP8kW-aEF-yOWdVne6UtY-ry4KVYsWiVED7BZ1f2vgR5TPkhNC-oil42XMaCMTTUND_EQ';
       return config;
     });
     var vue = new Vue({
@@ -366,7 +366,7 @@
           // console.log(this.pagination.type);
           param = '?uname=' + this.pagination.uname;
           //param += '&sex=' + this.pagination.sex;
-          param += '&usex=' + this.options.value;
+          //param += '&usex=' + this.options.value;
           //param += '&uemail=' + this.pagination.email;
           // console.log(param);
 
@@ -383,7 +383,6 @@
               this.pagination.pageSize = res.data.data.size;
               this.pagination.currentPage = res.data.data.current;
               this.pagination.total = res.data.data.total;
-
               this.dataList = res.data.data.records;
             });
         },
@@ -442,7 +441,7 @@
           })
             .then(() => {
               axios
-                .delete('/api/user/' + row.id)
+                .delete('/api/user/' + row.uid)
                 .then((res) => {
                   if (res.data.code === 200) {
                     this.$message.success('删除成功');
@@ -462,12 +461,13 @@
 
         //弹出编辑窗口
         handleUpdate(row) {
+          //console.log(row);
           axios
-            .get('/api/user/' + row.id)
+            .get('/api/user/getOne/' + row.uid)
             .then((res) => {
               if (res.data.code === 200 && res.data.data != null) {
                 this.dialogFormVisible4Edit = true;
-                this.formData = res.data.data;
+                this.formData = res.data.data[0];
               } else {
                 this.$message.error('数据同步失败，自动刷新');
               }
@@ -481,7 +481,7 @@
         //修改
         handleEdit() {
           axios
-            .put('/user', this.formData)
+            .put('/api/user', this.formData)
             .then((res) => {
               //判断当前操作是否成功
               if (res.data.code === 200) {

@@ -44,6 +44,11 @@ public class ArticleController {
     @GetMapping("/getAll")
     public Result getAll() {
         ArrayList<Article> articleList = (ArrayList<Article>) articleService.getAll();
+        for (Article article : articleList) {
+            List<User> userById = userService.findUserById(article.getUId());
+            User user = userById.get(0);
+            article.setUName(user.getUName());
+        }
         return articleList.size() != 0 ? Result.success(articleList) : Result.error("查询为空");
     }
 
@@ -57,6 +62,11 @@ public class ArticleController {
     @GetMapping("/getOne/{uId}")
     public Result getOne(@PathVariable("uId") int uId) {
         List<Article> articles = articleService.findByUserId(uId);
+        List<User> userById = userService.findUserById(uId);
+        User user = userById.get(0);
+        for (Article article : articles) {
+            article.setUName(user.getUName());
+        }
         return articles.size() > 0 ? Result.success(articles) : Result.error();
     }
 
