@@ -160,7 +160,6 @@ public class AccountController {
 
     @RequiresAuthentication
     @GetMapping("/logout")
-
     public Result logout() {
         SecurityUtils.getSubject().logout();
         return Result.success(null);
