@@ -112,6 +112,7 @@ public class UserController {
     @PutMapping
 //    @RequiresAuthentication
     public Result update(@RequestBody User user) {
+        user.setUPassword(DigestUtils.md5DigestAsHex(user.getUPassword().getBytes(StandardCharsets.UTF_8)));
         boolean flag = userService.updateById(user);
         return flag ? Result.success() : Result.error();
     }

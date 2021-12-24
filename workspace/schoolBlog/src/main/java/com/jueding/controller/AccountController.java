@@ -114,10 +114,10 @@ public class AccountController {
             response.setHeader("Access-control-Expose-Headers", "Authorization");
             return Result.success("登录成功", MapUtil.builder()
                     .put("id", user.getUId())
-                    .put("username", user.getUName())
-                    .put("sex", user.getUSex())
+                    .put("u_name", user.getUName())
+                    .put("u_sex", user.getUSex())
                     .put("phone", user.getUPhone())
-                    .put("email", user.getUEmail())
+                    .put("u_email", user.getUEmail())
                     .map()
             );
         }
