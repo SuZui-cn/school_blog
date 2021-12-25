@@ -7,56 +7,25 @@
             <h5>登录</h5>
           </div>
           <div class="card-img">
-            <img
-              src="../assets/images/slow_2.jpg"
-              class="card-img-top"
-              alt="..."
-            />
+            <img src="../assets/images/sign/sign_3.jpg" class="card-img-top" alt="..." />
           </div>
           <div class="card-body">
-            <el-form
-              :model="loginForm"
-              status-icon
-              :rules="rules"
-              ref="loginForm"
-              label-width="100px"
-              class="demo-ruleForm"
-            >
-              <el-form-item
-                label="用户名"
-                prop="username"
-              >
-                <el-input
-                  v-model="loginForm.username"
-                  placeholder="请输入用户名"
-                ></el-input>
+            <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px" class="demo-ruleForm">
+              <el-form-item label="用户名" prop="username">
+                <el-input v-model="loginForm.username" placeholder="请输入用户名"></el-input>
               </el-form-item>
-              <el-form-item
-                label="密码"
-                prop="password"
-              >
-                <el-input
-                  type="password"
-                  v-model="loginForm.password"
-                  autocomplete="off"
-                  placeholder="请输入密码"
-                ></el-input>
+              <el-form-item label="密码" prop="password">
+                <el-input type="password" v-model="loginForm.password" autocomplete="off" placeholder="请输入密码"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button
-                  type="primary"
-                  @click="login('loginForm')"
-                >登录</el-button>
+                <el-button type="primary" @click="login('loginForm')">登录</el-button>
                 <el-button @click="register('loginForm')">注册</el-button>
                 <el-button @click="emailLogin('loginForm')">邮箱登录</el-button>
               </el-form-item>
             </el-form>
           </div>
           <div class="login-footer d-flex">
-            <a
-              href="#"
-              @click="editPwd"
-            >修改密码</a>
+            <a href="#" @click="editPwd">修改密码</a>
           </div>
         </div>
       </div>
@@ -67,7 +36,7 @@
 // import axios from 'axios'
 
 export default {
-  data () {
+  data() {
     return {
       loginForm: {
         username: '',
@@ -86,13 +55,13 @@ export default {
   //   this.fastlogin()
   // },
   methods: {
-    login (formName) {
+    login(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 调用接口验证
           this.$axios.post('/login', this.loginForm).then((res) => {
             if (res.data.code === 400) {
-              this.$message.error(res.data.msg)
+              this.$message.error('账号或密码错误！')
               return
             }
             // 设置token
@@ -120,13 +89,13 @@ export default {
       })
     },
     // 注册
-    register () {
+    register() {
       this.$router.push('/sign/register')
     },
-    emailLogin () {
+    emailLogin() {
       this.$router.push('/sign/emailLogin')
     },
-    editPwd () {
+    editPwd() {
       this.$router.push('/sign/editPwd')
     },
     // 快捷登录

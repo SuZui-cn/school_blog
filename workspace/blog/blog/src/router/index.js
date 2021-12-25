@@ -1,14 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Detail from '../views/Detail.vue'
-import Public from '../views/Public.vue'
-import Self from '../views/Self.vue'
-import Sign from '../views/Sign.vue'
-import Register from '../components/Register.vue'
-import Login from '../components/Login.vue'
-import EmailLogin from '../components/EmailLogin.vue'
-import EditPwd from '../components/EditPwd.vue'
 import axios from 'axios'
 
 Vue.use(VueRouter)
@@ -18,19 +9,19 @@ const routes = [
   {
     path: '/sign',
     name: 'Sign',
-    component: Sign,
+    component: () => import('../views/Sign.vue'),
     children: [
       { path: '', redirect: '/sign/login' },
-      { path: 'login', name: 'Login', component: Login },
-      { path: 'register', name: 'Register', component: Register },
-      { path: 'emailLogin', name: 'EmailLogin', component: EmailLogin },
-      { path: 'editPwd', name: 'EditPwd', component: EditPwd },
+      { path: 'login', name: 'Login', component: () => import('../components/Login.vue') },
+      { path: 'register', name: 'Register', component: () => import('../components/Register.vue') },
+      { path: 'emailLogin', name: 'EmailLogin', component: () => import('../components/EmailLogin.vue') },
+      { path: 'editPwd', name: 'EditPwd', component: () => import('../components/EditPwd.vue') },
     ],
   },
-  { path: '/home', name: 'Home', component: Home },
-  { path: '/detail', name: 'Detail', component: Detail },
-  { path: '/public', name: 'Public', component: Public },
-  { path: '/Self', name: 'Self', component: Self },
+  { path: '/home', name: 'Home', component: () => import('../views/Home.vue') },
+  { path: '/detail', name: 'Detail', component: () => import('../views/Detail.vue') },
+  { path: '/public', name: 'Public', component: () => import('../views/Public.vue') },
+  { path: '/Self', name: 'Self', component: () => import('../views/Self.vue') },
 ]
 const router = new VueRouter({
   routes,

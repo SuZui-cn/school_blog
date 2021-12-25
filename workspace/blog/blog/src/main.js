@@ -3,12 +3,12 @@ import App from './App.vue'
 import router from './router'
 // 导入element
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+/* import 'element-ui/lib/theme-chalk/index.css' */
 // 导入bootstrap
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap'
+/* import 'bootstrap/dist/css/bootstrap.css' */
+/* import 'bootstrap/dist/js/bootstrap' */
 // 导入字体图标
-import 'bootstrap-icons/font/bootstrap-icons.css'
+/* import 'bootstrap-icons/font/bootstrap-icons.css' */
 // 导入懒加载
 import VueLazyload from 'vue-lazyload'
 // 导入jq
@@ -28,7 +28,7 @@ Vue.config.productionTip = false
 // 使用懒加载
 Vue.use(VueLazyload, {
   // 加载错误时显示的图标
-  error: require('@/assets/logo.png'),
+  /*   error: require('@/assets/logo.png'), */
   // 加载中显示的图标
   loading: require('@/assets/images/loading.gif'),
   // 预加载图片数
@@ -39,19 +39,9 @@ Vue.use(VueLazyload, {
 Vue.use(ElementUI)
 Vue.use(mavonEditor)
 Vue.prototype.$ = $
-/* router.beforeEach(to,from,next){
-  if(to.path.indexOf('/login'))
-} */
-// 添加token
-// axios.interceptors.request.use((config) => {
-//   // 为请求头对象，添加token验证的Authorization字段
-//   // config.headers.Authorization = window.sessionStorage.getItem('token')
-//   config.headers.Authorization = window.sessionStorage.getItem('token')
-//   return config
-// })
-// 挂载axios
+
 Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://localhost:8843/api'
+axios.defaults.baseURL = 'http://www.bloom-lmh.com:8880/api'
 
 new Vue({
   router,

@@ -23,31 +23,18 @@
             <el-card class="info-box box-card">
               <div class="userInfo-box">
                 <div class="userImg-box">
-                  <el-avatar
-                    :size="120"
-                    :src="require('@/assets/images/head_1.jpg')"
-                  ></el-avatar>
+                  <el-avatar :size="120" :src="require('@/assets/images/tx/tx_1.jpg')"></el-avatar>
                   <!--  <img src="../assets/logo.png" /> -->
                 </div>
-                <div
-                  v-if="userInfo !== null && userInfo !== ''"
-                  class="userName-box"
-                >
+                <div v-if="userInfo !== null && userInfo !== ''" class="userName-box">
                   <span>{{ userInfo.u_name }}</span>
                   <span>{{ userInfo.u_sex === '男' ? '先生' : '女士' }}</span>
                   <span>你好！</span>
                 </div>
               </div>
               <div class="webInfo-box">
-                <button
-                  v-show="userInfo === null || userInfo === ''"
-                  class="btn btn-primary"
-                  @click="login"
-                >登录</button>
-                <button
-                  class="btn btn-secondary"
-                  @click="signoff"
-                >注销</button>
+                <button v-show="userInfo === null || userInfo === ''" class="btn btn-primary" @click="login">登录</button>
+                <button class="btn btn-secondary" @click="signoff">注销</button>
               </div>
             </el-card>
             <!-- 信息展示区 end -->
@@ -56,22 +43,11 @@
             <el-card class="recentAt-box box-card">
               <div class="tool-box">
                 <h6 class="box-title">近期文章</h6>
-                <span
-                  class="fresh"
-                  @click="findRecentAt()"
-                ><i class="bi bi-arrow-clockwise"></i></span>
+                <span class="fresh" @click="findRecentAt()"><i class="bi bi-arrow-clockwise"></i></span>
               </div>
-              <div
-                class="recentAt-cart"
-                v-for="(article, index) in recentAtList"
-                :key="article.atId"
-                @click="toDetailPage(article)"
-              >
+              <div class="recentAt-cart" v-for="(article, index) in recentAtList" :key="article.atId" @click="toDetailPage(article)">
                 <div class="recentAt-img">
-                  <img
-                    :src="require('@/assets/images/recent/' + (index + 1) + '.jpg')"
-                    alt=""
-                  />
+                  <img :src="require('@/assets/images/recent/' + (index + 1) + '.jpg')" alt="" />
                 </div>
                 <ul class="recentAt-info">
                   <li class="recentAt-title">{{ article.atTitle }}</li>
@@ -87,17 +63,9 @@
             <el-card class="atType-box box-card">
               <div class="tool-box">
                 <h6 class="box-title">项目文档</h6>
-                <span
-                  class="fresh"
-                  @click="findAtType()"
-                ><i class="bi bi-arrow-clockwise"></i></span>
+                <span class="fresh" @click="findAtType()"><i class="bi bi-arrow-clockwise"></i></span>
               </div>
-              <div
-                v-for="type in atTypeList"
-                :key="type.atType"
-                @click="findAtByType(type)"
-                class="text item type-item"
-              >
+              <div v-for="type in atTypeList" :key="type.atType" @click="findAtByType(type)" class="text item type-item">
                 <span> {{ type.atType }}</span>
                 <span> {{ type.count }}</span>
               </div>
@@ -111,18 +79,9 @@
         <el-container>
           <!-- 主体 start -->
           <el-main class="home-main">
-            <div
-              v-for="(item, index) in articleList"
-              :key="item.atId"
-              @click="toDetailPage(item)"
-              v-bind:class="[index % 2 === 0 ? 'row' : 'row-reverse', 'card article-card']"
-            >
+            <div v-for="(item, index) in articleList" :key="item.atId" @click="toDetailPage(item)" v-bind:class="[index % 2 === 0 ? 'row' : 'row-reverse', 'card article-card']">
               <div class="img-box col-md-4">
-                <img
-                  v-lazy="require('@/assets/images/car.jpg')"
-                  class="img-fluid rounded-start"
-                  alt="..."
-                />
+                <img v-lazy="getBg()" class="img-fluid rounded-start" alt="..." />
               </div>
               <div class="card-body">
                 <div class="card-title">
@@ -141,20 +100,23 @@
             </div>
             <!-- 内容 end -->
             <div class="loading-box">
-              <p
-                v-if="loading"
-                v-loading="loading"
-                element-loading-text="拼命加载中"
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-              ></p>
+              <p v-if="loading" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)"></p>
               <p v-if="noMore">没有更多了</p>
             </div>
           </el-main>
           <!-- 主体 end -->
           <!-- 底部 start -->
           <el-footer class="home-footer footer">
-            <div class="footer-box"></div>
+            <div class="footer-box">
+              <!-- <ul>
+                <li>关于我们</li>
+              </ul>
+              <ul>
+                <li>备案号：16349819198</li>
+                <li></li>
+                <li></li>
+              </ul> -->
+            </div>
           </el-footer>
           <!-- 底部 end -->
         </el-container>
@@ -171,9 +133,10 @@
 
 <script>
 // import { marked } from '../../node_modules/marked/src/marked'
+import { random } from '../utils/rand'
 export default {
   name: 'Home',
-  data () {
+  data() {
     return {
       // 文章列表
       articleList: [
@@ -217,9 +180,8 @@ export default {
       total: 100,
     }
   },
-
   // dom加载完后
-  mounted () {
+  mounted() {
     // 特效
     // 获取屏幕高
     const screeHeight = document.documentElement.clientHeight
@@ -246,6 +208,7 @@ export default {
         this.load()
       }
     }
+
     // 为gocontent绑定事件，点击快速移到内容区
     /*  document.querySelector('.gocontent').onclick = function () {
       // console.log('a')
@@ -257,15 +220,15 @@ export default {
   },
   computed: {
     // 当大于这条时显示没有更多
-    noMore () {
+    noMore() {
       return this.articleList.length >= this.total
     },
     // 不可滚动条件为加载时或者没有数据时
-    disabled () {
+    disabled() {
       return this.loading || this.noMore
     },
   },
-  created () {
+  created() {
     this.total = this.maxLen + 1
     // 初始化用户信息
     this.initUserInfo()
@@ -277,13 +240,18 @@ export default {
     this.findAtType()
   },
   methods: {
+    getBg() {
+      /* random(1, 17) */
+      const bg = require('@/assets/images/article/ar_bg' + random(1, 17) + '.jpg')
+      return bg
+    },
     // 登陆后初始化用户信息
-    initUserInfo () {
+    initUserInfo() {
       // 获取并设置用户信息
       this.userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'))
     },
     // 跳转文章详情页
-    toDetailPage (article) {
+    toDetailPage(article) {
       this.$router.push({
         name: 'Detail',
         path: '/detail',
@@ -293,7 +261,7 @@ export default {
       })
     },
     // 加载文章
-    async load () {
+    async load() {
       if (this.disabled) {
         return
       }
@@ -326,24 +294,24 @@ export default {
       this.loading = false
     },
     // 查询近期文章
-    findRecentAt () {
+    findRecentAt() {
       // 调用接口刷新近期文章
     },
     // 查询类型
-    findAtType () {
+    findAtType() {
       // 调用接口刷新每种类型文章数量
     },
     // 分类查询
-    findAtByType (type) {
+    findAtByType(type) {
       // 调用接口查询
       console.log(type)
     },
     // 登录
-    login () {
+    login() {
       this.$router.push('/sign')
     },
     // 注销
-    signoff () {
+    signoff() {
       // 清除session
       window.sessionStorage.clear()
       // 返回登录页
@@ -384,7 +352,7 @@ export default {
     background: url(../../src/assets/images/bl_bg1.jpg) no-repeat;
     background-size: 100% 100%;
     &::before {
-      content: "";
+      content: '';
       display: block;
       position: absolute;
       width: 100%;
@@ -427,7 +395,6 @@ export default {
   // 内容
   .home-content {
     width: 100%;
-
     background-color: #f5f5f5;
     .home-content-box {
       width: 1200px;
@@ -435,7 +402,7 @@ export default {
 
       .home-aside {
         position: relative;
-        width: "300px";
+        width: '300px';
         cursor: pointer;
         // 文字不可选中
         -webkit-user-select: none;
@@ -487,6 +454,9 @@ export default {
             .userInfo-box {
               .userImg-box {
                 margin: 30px 0;
+                &:hover {
+                  transform: rotate(360deg);
+                }
               }
               .userName-box {
                 flex-direction: row;
@@ -539,7 +509,7 @@ export default {
                 width: 100%;
                 height: 20px;
                 &::after {
-                  content: "";
+                  content: '';
                   position: absolute;
                   top: 50%;
                   transform: translateY(-50%);
@@ -641,10 +611,11 @@ export default {
       }
       .home-footer {
         height: 200px !important;
+        color: rgb(231, 224, 224);
         .footer-box {
           width: 100%;
           height: 100%;
-          background: rgb(182, 226, 252);
+          background: rgb(62, 65, 66);
         }
       }
     }

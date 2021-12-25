@@ -7,7 +7,7 @@
             <h5>注册</h5>
           </div>
           <div class="card-img">
-            <img src="../assets/images/slow_3.jpg" class="card-img-top" alt="..." />
+            <img src="../assets/images/sign/sign_4.jpg" class="card-img-top" alt="..." />
           </div>
           <div class="card-body">
             <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px" class="demo-ruleForm">

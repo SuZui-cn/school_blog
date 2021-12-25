@@ -4,68 +4,27 @@
       <div class="col-sm-6">
         <div class="register-card card">
           <div class="card-header">
-            <h5>修改密码</h5>
+            <h5>找回密码</h5>
           </div>
           <div class="card-img">
-            <img
-              src="../assets/images/bird_1.jpg"
-              class="card-img-top"
-              alt="..."
-            />
+            <img src="../assets/images/sign/sign_2.jpg" class="card-img-top" alt="..." />
           </div>
           <div class="card-body">
-            <el-form
-              :model="registerForm"
-              status-icon
-              :rules="rules"
-              ref="registerForm"
-              label-width="100px"
-              class="demo-ruleForm"
-            >
-              <el-form-item
-                label="邮箱"
-                prop="email"
-              >
-                <el-input
-                  v-model="registerForm.email"
-                  placeholder="请输入邮箱"
-                ></el-input>
+            <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px" class="demo-ruleForm">
+              <el-form-item label="邮箱" prop="email">
+                <el-input v-model="registerForm.email" placeholder="请输入邮箱"></el-input>
               </el-form-item>
-              <el-form-item
-                label="新密码"
-                prop="password"
-              >
-                <el-input
-                  type="password"
-                  v-model="registerForm.password"
-                  autocomplete="off"
-                  placeholder="请输入新密码"
-                ></el-input>
+              <el-form-item label="新密码" prop="password">
+                <el-input type="password" v-model="registerForm.password" autocomplete="off" placeholder="请输入新密码"></el-input>
               </el-form-item>
               <div class="check-code-box">
-                <el-form-item
-                  label="验证码"
-                  prop="checkcode"
-                >
-                  <el-input
-                    type="text"
-                    v-model="registerForm.checkcode"
-                    autocomplete="off"
-                    placeholder="请输入验证码"
-                  ></el-input>
+                <el-form-item label="验证码" prop="checkcode">
+                  <el-input type="text" v-model="registerForm.checkcode" autocomplete="off" placeholder="请输入验证码"></el-input>
                 </el-form-item>
-                <input
-                  type="button"
-                  class="code-btn btn btn-secondary"
-                  v-model="time"
-                  @click="getCheckCode()"
-                />
+                <input type="button" class="code-btn btn btn-secondary" v-model="time" @click="getCheckCode()" />
               </div>
               <el-form-item>
-                <el-button
-                  type="primary"
-                  @click="editPwd('registerForm')"
-                >修改</el-button>
+                <el-button type="primary" @click="editPwd('registerForm')">找回</el-button>
                 <el-button
                   type="secondary"
                   @click="
@@ -73,7 +32,8 @@
                       this.$router.push('/sign/login')
                     }
                   "
-                >返回</el-button>
+                  >返回</el-button
+                >
               </el-form-item>
             </el-form>
           </div>
@@ -84,7 +44,7 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       registerForm: {
         email: '',
@@ -104,8 +64,8 @@ export default {
     }
   },
   methods: {
-    // 注册
-    editPwd (formName) {
+    // 修改密码
+    editPwd(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 调用接口验证
@@ -140,7 +100,7 @@ export default {
       })
     },
     // 登录
-    login () {
+    login() {
       // this.$router.push('/sign')
       this.$axios.post('/checkCode', this.registerForm).then((res) => {
         if (res.data.code === 400) {
@@ -163,7 +123,7 @@ export default {
       })
     },
     // 获取验证码
-    getCheckCode () {
+    getCheckCode() {
       // 验证码倒计时
       this.setTime()
       // 掉用接口向指定邮箱发送验证码
@@ -177,7 +137,7 @@ export default {
       })
     },
     // 验证码倒计时
-    async setTime () {
+    async setTime() {
       let num = 60
       this.time = num-- + 's'
       clearInterval(this.timer)

@@ -99,7 +99,6 @@ export default {
   },
   created() {
     // 获取文章
-
     if (typeof this.$route.params.article !== 'undefined') {
       // 获取文章
       this.article = this.$route.params.article

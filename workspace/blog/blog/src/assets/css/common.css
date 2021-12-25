@@ -4,6 +4,7 @@
   transition: 0.3s;
 }
 body{
+  min-width: 1200px;
  /*  width: 100vw; */
   overflow-x: hidden;
 }
