@@ -17,7 +17,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://www.bloom-lmh.com:8880/',
+        target: 'http://localhost:8843/',
         changeOrigin: true,
         ws: true,
       },
