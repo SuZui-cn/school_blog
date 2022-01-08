@@ -7,18 +7,49 @@
             <h5>注册</h5>
           </div>
           <div class="card-img">
-            <img src="../assets/images/sign/sign_4.jpg" class="card-img-top" alt="..." />
+            <img
+              src="../assets/images/sign/sign_4.jpg"
+              class="card-img-top"
+              alt="..."
+            />
           </div>
           <div class="card-body">
-            <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="用户名" prop="name">
-                <el-input v-model="registerForm.uname" placeholder="请输入用户名"></el-input>
+            <el-form
+              :model="registerForm"
+              status-icon
+              :rules="rules"
+              ref="registerForm"
+              label-width="100px"
+              class="demo-ruleForm"
+            >
+              <el-form-item
+                label="用户名"
+                prop="name"
+              >
+                <el-input
+                  v-model="registerForm.uname"
+                  placeholder="请输入用户名"
+                ></el-input>
               </el-form-item>
-              <el-form-item label="密码" prop="upassword">
-                <el-input type="password" v-model="registerForm.upassword" autocomplete="off" placeholder="请输入密码"></el-input>
+              <el-form-item
+                label="密码"
+                prop="upassword"
+              >
+                <el-input
+                  type="password"
+                  v-model="registerForm.upassword"
+                  autocomplete="off"
+                  placeholder="请输入密码"
+                ></el-input>
               </el-form-item>
-              <el-form-item label="邮箱" prop="uemail">
-                <el-input v-model="registerForm.uemail" placeholder="请输入邮箱"></el-input>
+              <el-form-item
+                label="邮箱"
+                prop="uemail"
+              >
+                <el-input
+                  v-model="registerForm.uemail"
+                  placeholder="请输入邮箱"
+                ></el-input>
               </el-form-item>
               <!-- <el-form-item label="性别" prop="sex">
                 <el-input type="text" v-model="registerForm.usex" autocomplete="off" placeholder="请输入性别"></el-input>
@@ -49,7 +80,10 @@
                 />
               </div> -->
               <el-form-item>
-                <el-button type="primary" @click="login">登录</el-button>
+                <el-button
+                  type="primary"
+                  @click="login"
+                >登录</el-button>
                 <el-button @click="register('registerForm')">注册</el-button>
               </el-form-item>
             </el-form>
@@ -61,7 +95,7 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       registerForm: {
         uid: 1,
@@ -86,7 +120,7 @@ export default {
   },
   methods: {
     // 注册
-    register(formName) {
+    register (formName) {
       console.log(this.registerForm)
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -128,11 +162,11 @@ export default {
       })
     },
     // 登录
-    login() {
+    login () {
       this.$router.push('/sign')
     },
     // 获取验证码
-    getCheckCode() {
+    getCheckCode () {
       // 验证码倒计时
       this.setTime()
       // 掉用接口向指定邮箱发送验证码
@@ -146,7 +180,7 @@ export default {
       })
     },
     // 验证码倒计时
-    async setTime() {
+    async setTime () {
       let num = 60
       this.time = num-- + 's'
       clearInterval(this.timer)

@@ -14,13 +14,13 @@ module.exports = {
       'highlight.js': 'hljs',
     },
   },
-  devServer: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8843/',
-        changeOrigin: true,
-        ws: true,
-      },
-    },
-  },
+  // devServer: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://localhost:8843/',
+  //       changeOrigin: true,
+  //       ws: true,
+  //     },
+  //   },
+  // },
 }

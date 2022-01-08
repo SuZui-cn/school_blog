@@ -44,8 +44,10 @@ public class AccountController {
     public Result login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         System.out.println(loginDto);
         User user = userService.getOne(new QueryWrapper<User>().eq("u_name", loginDto.getUsername()));
-        Assert.notNull(user, "用户不存在");
-        if (!user.getUPassword().equals(DigestUtils.md5DigestAsHex(loginDto.getPassword()
+//        Assert.notNull(user, "用户不存在");
+        if (user == null) {
+            return Result.error("用户不存在");
+        } else if (!user.getUPassword().equals(DigestUtils.md5DigestAsHex(loginDto.getPassword()
                 .getBytes(StandardCharsets.UTF_8)))) {
             return Result.error("密码不正确");
         }
