@@ -72,6 +72,7 @@ public class AccountController {
         String randomString = StringUtils.getRandomString(6);
         EmailUtil.sendEmail(email, randomString);
         log.info(randomString);
+//        RedisTemplate<String, Object> redis = new RedisTemplate<>();
         Jedis jedis = new Jedis();
         jedis.set("code", randomString);
         log.info("将验证码存入缓存");
