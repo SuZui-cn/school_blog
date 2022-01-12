@@ -4,7 +4,6 @@ package com.jueding.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jueding.common.lang.Result;
 import com.jueding.entity.User;
-import com.jueding.service.ArticleService;
 import com.jueding.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +28,12 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
     @Autowired
-    private ArticleService articleService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * 查看所有用户的接口

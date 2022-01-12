@@ -12,6 +12,9 @@ import java.util.Properties;
  * @author 北落燕门
  */
 public class EmailUtil {
+    private final static String email = "";
+    private final static String password = "";
+
     public static void sendEmail(String emailAddress, String code) throws MessagingException, GeneralSecurityException, javax.mail.MessagingException {
         //创建一个配置文件并保存
         Properties properties = new Properties();
@@ -27,7 +30,7 @@ public class EmailUtil {
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("1736124626@qq.com", "vzaolqhxbpxbdacg");
+                return new PasswordAuthentication(email, password);
             }
         });
         //开启debug模式
@@ -35,11 +38,11 @@ public class EmailUtil {
         //获取连接对象
         Transport transport = session.getTransport();
         //连接服务器
-        transport.connect("smtp.qq.com", "1736124626@qq.com", "vzaolqhxbpxbdacg");
+        transport.connect("smtp.qq.com", email, password);
         //创建邮件对象
         MimeMessage mimeMessage = new MimeMessage(session);
         //邮件发送人
-        mimeMessage.setFrom(new InternetAddress("1736124626@qq.com"));
+        mimeMessage.setFrom(new InternetAddress(email));
         //邮件接收人++
         mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(emailAddress));
         //邮件标题

@@ -34,11 +34,27 @@ import java.util.TimerTask;
 @RequestMapping("/api")
 public class AccountController {
 
-    @Autowired
-    UserService userService;
+
+    private UserService userService;
+
+    private JwtUtils jwtUtils;
 
     @Autowired
-    JwtUtils jwtUtils;
+    public void getUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void JwtUtils(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
+
+
+//    @Autowired
+//    private UserService userService;
+
+//    @Autowired
+//    private JwtUtils jwtUtils;
 
     @PostMapping("/login")
     public Result login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
