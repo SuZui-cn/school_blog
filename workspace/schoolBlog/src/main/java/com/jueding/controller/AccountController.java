@@ -39,6 +39,8 @@ public class AccountController {
 
     private JwtUtils jwtUtils;
 
+    private EmailUtil emailUtil;
+
     @Autowired
     public void getUserService(UserService userService) {
         this.userService = userService;
@@ -47,6 +49,11 @@ public class AccountController {
     @Autowired
     public void JwtUtils(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
+    }
+
+    @Autowired
+    public void setEmailUtil(EmailUtil emailUtil) {
+        this.emailUtil = emailUtil;
     }
 
 
@@ -88,7 +95,8 @@ public class AccountController {
     public Result emailLogin(@PathVariable String email) throws MessagingException, javax.mail.MessagingException, GeneralSecurityException {
         log.info("接受邮件请求");
         String randomString = StringUtils.getRandomString(6);
-        EmailUtil.sendEmail(email, randomString);
+//        EmailUtil.sendEmail(email, randomString);
+        emailUtil.sendEmail(email, randomString);
         log.info(randomString);
 //        RedisTemplate<String, Object> redis = new RedisTemplate<>();
         Jedis jedis = new Jedis();

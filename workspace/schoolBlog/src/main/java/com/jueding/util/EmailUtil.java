@@ -1,6 +1,7 @@
 package com.jueding.util;
 
 import com.sun.mail.util.MailSSLSocketFactory;
+import org.springframework.stereotype.Component;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -11,11 +12,12 @@ import java.util.Properties;
 /**
  * @author 北落燕门
  */
+@Component
 public class EmailUtil {
     private final static String email = "";
     private final static String password = "";
 
-    public static void sendEmail(String emailAddress, String code) throws MessagingException, GeneralSecurityException, javax.mail.MessagingException {
+    public void sendEmail(String emailAddress, String code) throws MessagingException, GeneralSecurityException, javax.mail.MessagingException {
         //创建一个配置文件并保存
         Properties properties = new Properties();
         properties.setProperty("mail.host", "smtp.qq.com");
