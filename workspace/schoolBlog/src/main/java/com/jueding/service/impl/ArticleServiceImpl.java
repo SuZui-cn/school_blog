@@ -27,10 +27,21 @@ import java.util.List;
 @Slf4j
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
-    @Autowired
+    //    @Autowired
     private ArticleMapper articleMapper;
-    @Autowired
+    //    @Autowired
     private UserService userService;
+
+    @Autowired
+    public void getArticleMapper(ArticleMapper articleMapper) {
+        this.articleMapper = articleMapper;
+    }
+
+    @Autowired
+    public void getUserService(UserService userService) {
+        this.userService = userService;
+    }
+
 
     @Override
     public List<Article> getAll() {
