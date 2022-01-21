@@ -2,12 +2,32 @@
   <div class="public-container">
     <div class="public-box">
       <div class="mb-3">
-        <label for="atTitle" class="form-label">标题</label>
-        <input v-model="article.atTitle" type="text" class="form-control" id="atTitle" placeholder="文章主题" required />
+        <label
+          for="atTitle"
+          class="form-label"
+        >标题</label>
+        <input
+          v-model="article.atTitle"
+          type="text"
+          class="form-control"
+          id="atTitle"
+          placeholder="文章主题"
+          required
+        />
       </div>
       <div class="mb-3">
-        <label for="atAbstract" class="form-label">描述</label>
-        <input v-model="article.atAbstract" type="text" class="form-control" id="abstract" placeholder="描述信息" required />
+        <label
+          for="atAbstract"
+          class="form-label"
+        >描述</label>
+        <input
+          v-model="article.atAbstract"
+          type="text"
+          class="form-control"
+          id="abstract"
+          placeholder="描述信息"
+          required
+        />
       </div>
       <!-- <div class="mb-3">
         <label
@@ -36,8 +56,15 @@
         />
       </div> -->
       <div class="mb-3">
-        <label for="atType" class="form-label">文章类别</label>
-        <select v-model="article.atType" class="form-select" aria-label="文学类">
+        <label
+          for="atType"
+          class="form-label"
+        >文章类别</label>
+        <select
+          v-model="article.atType"
+          class="form-select"
+          aria-label="文学类"
+        >
           <option selected>请选择类型</option>
           <option value="文学类">文学类</option>
           <option value="生活类">生活类</option>
@@ -61,20 +88,52 @@
         </el-upload>
       </div> -->
       <div class="mb-3">
-        <el-button class="btn btn-light" type="text" @click="mdVisible = true">编写内容</el-button>
-        <el-dialog title="开始编写你的文章吧！" :visible.sync="mdVisible" width="80%">
-          <mavon-editor class="md-box" v-model="article.atContent" ref="md" @change="change" :ishljs="false" style="min-height: 600px" />
-          <span slot="footer" class="dialog-footer">
+        <el-button
+          class="btn btn-light"
+          type="text"
+          @click="mdVisible = true"
+        >编写内容</el-button>
+        <el-dialog
+          title="开始编写你的文章吧！"
+          :visible.sync="mdVisible"
+          width="80%"
+        >
+          <mavon-editor
+            class="md-box"
+            v-model="article.atContent"
+            ref="md"
+            @change="change"
+            :ishljs="false"
+            style="min-height: 600px"
+          />
+          <span
+            slot="footer"
+            class="dialog-footer"
+          >
             <el-button @click="mdVisible = false">取 消</el-button>
-            <el-button type="primary" @click="mdVisible = false">保存</el-button>
+            <el-button
+              type="primary"
+              @click="mdVisible = false"
+            >保存</el-button>
           </span>
         </el-dialog>
       </div>
       <div class="mb-3 d-flex justify-content-center">
-        <el-popconfirm title="这是一段内容确定重置吗？" @confirm="reset">
-          <el-button slot="reference" type="button" class="reset-btn btn btn-secondary">重置</el-button>
+        <el-popconfirm
+          title="这是一段内容确定重置吗？"
+          @confirm="reset"
+        >
+          <el-button
+            slot="reference"
+            type="button"
+            class="reset-btn btn btn-secondary"
+          >重置</el-button>
         </el-popconfirm>
-        <button type="button" class="submit-btn btn btn-primary" @click="submit">发布</button>
+        <button
+          type="button"
+          class="submit-btn btn btn-primary"
+          @click="submit"
+        >发布</button>
       </div>
     </div>
   </div>
@@ -82,7 +141,7 @@
 <script>
 export default {
   // 注册组件
-  data() {
+  data () {
     return {
       article: {
         atTitle: '',
@@ -97,7 +156,7 @@ export default {
       mdVisible: false,
     }
   },
-  created() {
+  created () {
     // 获取文章
     if (typeof this.$route.params.article !== 'undefined') {
       // 获取文章
@@ -115,12 +174,12 @@ export default {
 
   methods: {
     // 将输入转为html
-    change(value, render) {
+    change (value, render) {
       // render 为 markdown 解析后的结果html
       this.html = render
     },
     // 发布文章
-    submit() {
+    submit () {
       // 调用接口上传文章
       // console.log(this.article)
       // console.log(this.html)
@@ -136,15 +195,15 @@ export default {
       })
     },
     // 图片上传关闭
-    handleRemove(file, fileList) {
+    handleRemove (file, fileList) {
       console.log(file, fileList)
     },
     // 图片上床预览
-    handlePictureCardPreview(file) {
+    handlePictureCardPreview (file) {
       console.log(file)
     },
     // 重置
-    reset() {
+    reset () {
       this.article = []
     },
   },
