@@ -23,6 +23,7 @@ const routes = [
   { path: '/public', name: 'Public', component: () => import('../views/Public.vue') },
   { path: '/Self', name: 'Self', component: () => import('../views/Self.vue') },
 ]
+
 const router = new VueRouter({
   routes,
 })
