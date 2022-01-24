@@ -6,7 +6,6 @@ mybatis-plus:
     db-config:
       id-type: auto
       table-prefix: blog_
-
 jueding:
   jwt:
     secret: f4e2e52034348f86b67cde581c0f9eb5
