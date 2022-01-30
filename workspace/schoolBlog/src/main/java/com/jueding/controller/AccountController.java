@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
@@ -35,33 +36,22 @@ import java.util.TimerTask;
 public class AccountController {
 
 
-    private UserService userService;
+    private final UserService userService;
 
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
-    private EmailUtil emailUtil;
+    private final EmailUtil emailUtil;
+
+    private final RedisTemplate redisTemplate;
 
     @Autowired
-    public void getUserService(UserService userService) {
+    public AccountController(UserService userService, JwtUtils jwtUtils, EmailUtil emailUtil, RedisTemplate redisTemplate) {
         this.userService = userService;
-    }
-
-    @Autowired
-    public void JwtUtils(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
-    }
-
-    @Autowired
-    public void setEmailUtil(EmailUtil emailUtil) {
         this.emailUtil = emailUtil;
+        this.redisTemplate = redisTemplate;
     }
 
-
-//    @Autowired
-//    private UserService userService;
-
-//    @Autowired
-//    private JwtUtils jwtUtils;
 
     @PostMapping("/login")
     public Result login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
@@ -95,20 +85,17 @@ public class AccountController {
     public Result emailLogin(@PathVariable String email) throws MessagingException, javax.mail.MessagingException, GeneralSecurityException {
         log.info("接受邮件请求");
         String randomString = StringUtils.getRandomString(6);
-//        EmailUtil.sendEmail(email, randomString);
         emailUtil.sendEmail(email, randomString);
         log.info(randomString);
-//        RedisTemplate<String, Object> redis = new RedisTemplate<>();
-        Jedis jedis = new Jedis();
-        jedis.set("code", randomString);
+        redisTemplate.opsForValue().set("code", randomString);
         log.info("将验证码存入缓存");
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Jedis jedis1 = new Jedis();
-                if (jedis1.get("code") != null) {
-                    jedis1.del("code");
+                String code = (String) redisTemplate.opsForValue().get("code");
+                if (code != null) {
+                    redisTemplate.delete("code");
                 }
                 timer.cancel();
             }
