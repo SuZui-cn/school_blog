@@ -34,7 +34,6 @@ public class JwtFilter extends AuthenticatingFilter {
         if (StringUtils.isEmpty(jwt)) {
             return null;
         }
-
         return new JwtToken(jwt);
     }
 

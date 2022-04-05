@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
   // 判断是否要跳转到权限页
   if (targetPaths.indexOf(to.path) !== -1) {
     const token = sessionStorage.getItem('token')
-    if (token !== null || typeof token === 'undefined') {
+    if (token !== null || typeof token !== 'undefined') {
       // 添加token
       axios.interceptors.request.use((config) => {
         // 为请求头对象，添加token验证的Authorization字段
