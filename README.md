@@ -46,9 +46,9 @@ axios.defaults.baseURL = 'http://www.bloom-lmh.com:8880/api'
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://8.130.28.198:3306/school_blog?UseUnicode=True&CharacterEncoding=UTF-8
-    username: school_blog
-    password: KpPykpzxRJjamTDk
+    url: 
+    username: 
+    password: 
 ```
 
 运行后台项目时需要开启redis

@@ -29,7 +29,6 @@ public class ArticleInfoController {
     @GetMapping("/support/{atId}/{uId}")
     public Result support(@PathVariable("atId") int atId,
                           @PathVariable("uId") int uId) {
-
         return null;
     }
 
