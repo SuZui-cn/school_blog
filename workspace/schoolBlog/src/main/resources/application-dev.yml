@@ -6,7 +6,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/school_blog?UseUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://localhost:3306/school_blog?useUnicode=true&characterEncoding=UTF-8
       username: user
       password: 123456
 
