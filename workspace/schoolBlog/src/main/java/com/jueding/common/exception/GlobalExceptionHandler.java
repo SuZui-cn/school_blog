@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(value = ShiroException.class)
     public Result handler(ShiroException e) {
-        log.error("运行时异常：----------------{}", e);
+        log.error("运行时异常：----------------{}", e.getMessage());
         return Result.error(e.getMessage());
     }
 
@@ -34,16 +34,15 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = IllegalArgumentException.class)
     public Result handler(IllegalArgumentException e) {
-//        log.error("Assert异常：----------------{}", e);
         log.info(e.getMessage());
         return Result.error(e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = RuntimeException.class)
-    public Result handler(RuntimeException e) {
-        log.error("运行时异常：----------------{}", e);
-        return Result.error(e.getMessage());
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(value = RuntimeException.class)
+//    public Result handler(RuntimeException e) {
+//        log.error("运行时异常：----------------{}", e);
+//        return Result.error(e.getMessage());
+//    }
 
 }
